@@ -1,5 +1,6 @@
 # homefinance
-Helper for personal finance planning
+Helper for personal finance planning.
+
 Development documentation is available only in Russian.
 Source code comments are in English.
 
