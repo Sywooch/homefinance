@@ -4,6 +4,7 @@ Helper for personal finance planning.
 Development documentation is available only in Russian.
 Source code comments are in English.
 
+## Описание
 Персональное финансовое планирование включает в себя, как правило, три уровня:
  * Финансовая безопасность;
  * Комфорт;
