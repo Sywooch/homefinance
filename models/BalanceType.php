@@ -20,14 +20,6 @@ class BalanceType extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
-        return 'balance_type';
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [

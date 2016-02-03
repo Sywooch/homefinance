@@ -21,14 +21,6 @@ class Transaction extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
-        return 'transaction';
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [

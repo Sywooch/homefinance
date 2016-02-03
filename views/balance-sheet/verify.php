@@ -23,11 +23,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'order_code',
             'name',
-			'AmountOLD',
-			'AmountNEW',
-			'Decrease',
-			'Increase',
-			'Balance',
+			'AmountOLD:decimal',
+			'AmountNEW:decimal',
+			'Decrease:decimal',
+			'Increase:decimal',
+			'Balance:decimal',
         ],
     ]); ?>
 

@@ -20,14 +20,6 @@ class BalanceAmount extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
-        return 'balance_amount';
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [

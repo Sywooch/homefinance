@@ -18,14 +18,6 @@ class BalanceSheet extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
-        return 'balance_sheet';
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
@@ -73,18 +65,17 @@ class BalanceSheet extends \yii\db\ActiveRecord
 			item.name,
 			amntOld.amount AS AmountOLD,
 			amntNew.amount AS AmountNEW,
-			sum(transFrom.amount) * count(DISTINCT transFrom.id) / count(transFrom.id) AS Decrease,
-			sum(transTo.amount) * count(DISTINCT transTo.id) / count(transTo.id) AS Increase,
-			amntNew.amount - 
-				(amntOld.amount - 
-				(sum(transFrom.amount) * count(DISTINCT transFrom.id) / count(transFrom.id)) + 
-				(sum(transTo.amount) * count(DISTINCT transTo.id) / count(transTo.id))
-				) AS Balance
-		FROM balance_item AS item
-			LEFT OUTER JOIN balance_amount AS amntOld ON item.id = amntOld.balance_item_id AND amntOld.balance_sheet_id = :old_id
-			LEFT OUTER JOIN balance_amount AS amntNew ON item.id = amntNew.balance_item_id AND amntNew.balance_sheet_id = :new_id
-			LEFT OUTER JOIN transaction AS transFrom ON transFrom.from_item_id = item.id
-			LEFT OUTER JOIN transaction AS transTo ON transTo.to_item_id = item.id
+			IFNULL(sum(transFrom.amount) * count(DISTINCT transFrom.id) / count(transFrom.id), 0) AS Decrease,
+			IFNULL(sum(transTo.amount) * count(DISTINCT transTo.id) / count(transTo.id), 0) AS Increase,
+			(amntOld.amount - 
+				IFNULL((sum(transFrom.amount) * count(DISTINCT transFrom.id) / count(transFrom.id)), 0) + 
+				IFNULL((sum(transTo.amount) * count(DISTINCT transTo.id) / count(transTo.id)), 0)
+			) - amntNew.amount AS Balance
+		FROM {{%balance_item}} AS item
+			LEFT OUTER JOIN {{%balance_amount}} AS amntOld ON item.id = amntOld.balance_item_id AND amntOld.balance_sheet_id = :old_id
+			LEFT OUTER JOIN {{%balance_amount}} AS amntNew ON item.id = amntNew.balance_item_id AND amntNew.balance_sheet_id = :new_id
+			LEFT OUTER JOIN {{%transaction}} AS transFrom ON transFrom.from_item_id = item.id
+			LEFT OUTER JOIN {{%transaction}} AS transTo ON transTo.to_item_id = item.id
 		GROUP BY
 			item.id,
 			item.order_code,

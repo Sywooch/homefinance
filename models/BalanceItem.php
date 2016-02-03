@@ -23,14 +23,6 @@ class BalanceItem extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
-        return 'balance_item';
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
