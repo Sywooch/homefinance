@@ -4,17 +4,17 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\BalanceItem */
+/* @var $model app\models\Account */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="balance-item-form">
+<div class="account-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'balance_type_id')->dropDownList(app\models\BalanceType::find()->select(['name', 'id'])->orderBy('order_code')->indexBy('id')->column()); ?>
+    <?= $form->field($model, 'balance_item_id')->dropDownList(app\models\BalanceItem::find()->select(['name', 'id'])->orderBy('order_code')->indexBy('id')->column()); ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

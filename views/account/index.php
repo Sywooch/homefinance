@@ -6,26 +6,23 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Transactions';
+$this->title = 'Accounts';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="transaction-index">
+<div class="account-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Transaction', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Account', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-            'id',
-            'amount',
-            'description',
-            'accountFrom.name:text:From Account',
-            'accountTo.name:text:To Account',
-            'date',
+            'order_code',
+            'balanceItem.name:text:Balance Item',
+            'name',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

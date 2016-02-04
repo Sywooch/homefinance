@@ -9,10 +9,10 @@ use Yii;
  *
  * @property integer $id
  * @property string $amount
- * @property integer $balance_item_id
  * @property integer $balance_sheet_id
+ * @property integer $account_id
  *
- * @property BalanceItem $balanceItem
+ * @property Account $account
  * @property BalanceSheet $balanceSheet
  */
 class BalanceAmount extends \yii\db\ActiveRecord
@@ -23,9 +23,9 @@ class BalanceAmount extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['amount', 'balance_item_id', 'balance_sheet_id'], 'required'],
+            [['amount', 'balance_sheet_id', 'account_id'], 'required'],
             [['amount'], 'number'],
-            [['balance_item_id', 'balance_sheet_id'], 'integer']
+            [['balance_sheet_id', 'account_id'], 'integer']
         ];
     }
 	
@@ -43,17 +43,17 @@ class BalanceAmount extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'amount' => 'Amount',
-            'balance_item_id' => 'Balance Item ID',
             'balance_sheet_id' => 'Balance Sheet ID',
+            'account_id' => 'Account ID',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getBalanceItem()
+    public function getAccount()
     {
-        return $this->hasOne(BalanceItem::className(), ['id' => 'balance_item_id']);
+        return $this->hasOne(Account::className(), ['id' => 'account_id']);
     }
 
     /**

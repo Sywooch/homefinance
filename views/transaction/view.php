@@ -30,8 +30,9 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'amount',
-            'fromItem.name:text:From Item',
-            'toItem.name:text:To Item',
+            'description',
+            'accountFrom.name:text:From Account',
+            'accountTo.name:text:To Account',
             'date',
         ],
     ]) ?>

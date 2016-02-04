@@ -13,11 +13,13 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'amount')->textInput(['maxlength' => true]) ?>
+	
+    <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
 
     <?
-	$src = \app\models\BalanceItem::find()->select('name, id')->indexBy('id')->column();
-	echo $form->field($model, 'from_item_id')->dropdownList($src, ['prompt'=>'- add -']);
-	echo $form->field($model, 'to_item_id')->dropdownList($src, ['prompt'=>'- remove -']);
+	$src = \app\models\Account::find()->select('name, id')->orderBy('order_code')->indexBy('id')->column();
+	echo $form->field($model, 'account_from_id')->dropdownList($src, ['prompt'=>'- add -']);
+	echo $form->field($model, 'account_to_id')->dropdownList($src, ['prompt'=>'- remove -']);
 	?>
 
     <?= $form->field($model, 'date')->textInput() ?>

@@ -3,16 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\BalanceAmount;
+use app\models\Account;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * BalanceAmountController implements the CRUD actions for BalanceAmount model.
+ * AccountController implements the CRUD actions for Account model.
  */
-class BalanceAmountController extends Controller
+class AccountController extends Controller
 {
     public function behaviors()
     {
@@ -27,18 +27,14 @@ class BalanceAmountController extends Controller
     }
 
     /**
-     * Lists all BalanceAmount models.
+     * Lists all Account models.
      * @return mixed
      */
     public function actionIndex()
     {
-		$session = Yii::$app->session;
-		$session->open();
         $dataProvider = new ActiveDataProvider([
-            'query' => BalanceAmount::find()
-			->where(array('balance_sheet_id' => $session['balance_sheet_id']))
-			->join('LEFT OUTER JOIN', 'account', 'balance_item_id = account.id')
-			->orderBy('account.order_code'),
+            'query' => Account::find()->
+			orderBy('order_code'),
         ]);
 
         return $this->render('index', [
@@ -47,7 +43,7 @@ class BalanceAmountController extends Controller
     }
 
     /**
-     * Displays a single BalanceAmount model.
+     * Displays a single Account model.
      * @param integer $id
      * @return mixed
      */
@@ -59,17 +55,15 @@ class BalanceAmountController extends Controller
     }
 
     /**
-     * Creates a new BalanceAmount model.
+     * Creates a new Account model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-		$session = Yii::$app->session;
-		$session->open();
-        $model = new BalanceAmount();
+        $model = new Account();
 
-        if ($model->load(Yii::$app->request->post()) && $model->RecalcValues($session['balance_sheet_id']) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->RecalcValues() && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -79,7 +73,7 @@ class BalanceAmountController extends Controller
     }
 
     /**
-     * Updates an existing BalanceAmount model.
+     * Updates an existing Account model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -88,7 +82,7 @@ class BalanceAmountController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->RecalcValues() && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -98,7 +92,7 @@ class BalanceAmountController extends Controller
     }
 
     /**
-     * Deletes an existing BalanceAmount model.
+     * Deletes an existing Account model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -111,15 +105,15 @@ class BalanceAmountController extends Controller
     }
 
     /**
-     * Finds the BalanceAmount model based on its primary key value.
+     * Finds the Account model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return BalanceAmount the loaded model
+     * @return Account the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = BalanceAmount::findOne($id)) !== null) {
+        if (($model = Account::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

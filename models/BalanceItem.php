@@ -13,10 +13,9 @@ use Yii;
  * @property string $name
  * @property integer $balance_type_id
  *
+ * @property Account[] $accounts
  * @property BalanceAmount[] $balanceAmounts
  * @property BalanceType $balanceType
- * @property Transaction[] $transactions
- * @property Transaction[] $transactions0
  */
 class BalanceItem extends \yii\db\ActiveRecord
 {
@@ -31,6 +30,17 @@ class BalanceItem extends \yii\db\ActiveRecord
             [['order_code', 'name'], 'string', 'max' => 45]
         ];
     }
+	
+	public function beforeValidate()
+	{
+		if (parent::beforeValidate()) {
+			// ...custom code here...
+			$this->order_code = $this->balanceType->order_code . $this->order_num;
+			return true;
+		} else {
+			return false;
+		}
+	}
 
     /**
      * @inheritdoc
@@ -48,10 +58,17 @@ class BalanceItem extends \yii\db\ActiveRecord
 	
 	public function RecalcValues()  
 	{  
-		$this->order_num = 1;  
-		$this->order_code = $this->balanceType->order_code . $this->order_num;
+		$this->order_num = 1;
 		return true;  
 	}
+	
+	/**
+    * @return \yii\db\ActiveQuery
+    */
+    public function getAccounts()
+    {
+        return $this->hasMany(Account::className(), ['balance_item_id' => 'id']);
+    }
 
     /**
      * @return \yii\db\ActiveQuery
@@ -67,21 +84,5 @@ class BalanceItem extends \yii\db\ActiveRecord
     public function getBalanceType()
     {
         return $this->hasOne(BalanceType::className(), ['id' => 'balance_type_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getTransactions()
-    {
-        return $this->hasMany(Transaction::className(), ['from_item_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getTransactions0()
-    {
-        return $this->hasMany(Transaction::className(), ['to_item_id' => 'id']);
     }
 }

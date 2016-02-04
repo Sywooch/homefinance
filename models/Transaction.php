@@ -9,12 +9,13 @@ use Yii;
  *
  * @property integer $id
  * @property string $amount
- * @property integer $from_item_id
- * @property integer $to_item_id
+ * @property string $description
  * @property string $date
+ * @property integer $account_from_id
+ * @property integer $account_to_id
  *
- * @property BalanceItem $fromItem
- * @property BalanceItem $toItem
+ * @property Account $accountFrom
+ * @property Account $accountTo
  */
 class Transaction extends \yii\db\ActiveRecord
 {
@@ -26,8 +27,9 @@ class Transaction extends \yii\db\ActiveRecord
         return [
             [['amount', 'date'], 'required'],
             [['amount'], 'number'],
-            [['from_item_id', 'to_item_id'], 'integer'],
-            [['date'], 'safe']
+            [['date'], 'safe'],
+            [['account_from_id', 'account_to_id'], 'integer'],
+            [['description'], 'string', 'max' => 255]
         ];
     }
 
@@ -39,25 +41,26 @@ class Transaction extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'amount' => 'Amount',
-            'from_item_id' => 'From Item ID',
-            'to_item_id' => 'To Item ID',
+            'description' => 'Description',
             'date' => 'Date',
+            'account_from_id' => 'Account From ID',
+            'account_to_id' => 'Account To ID',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getFromItem()
+    public function getAccountFrom()
     {
-        return $this->hasOne(BalanceItem::className(), ['id' => 'from_item_id']);
+        return $this->hasOne(Account::className(), ['id' => 'account_from_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getToItem()
+    public function getAccountTo()
     {
-        return $this->hasOne(BalanceItem::className(), ['id' => 'to_item_id']);
+        return $this->hasOne(Account::className(), ['id' => 'account_to_id']);
     }
 }

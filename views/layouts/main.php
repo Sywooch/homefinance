@@ -42,6 +42,7 @@ AppAsset::register($this);
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'Balance Items', 'url' => ['/balance-item/index']],
+            ['label' => 'Accounts', 'url' => ['/account/index']],
             ['label' => 'Balance Sheets', 'url' => ['/balance-sheet/index']],
             ['label' => 'Transactions', 'url' => ['/transaction/index']],
             Yii::$app->user->isGuest ?
