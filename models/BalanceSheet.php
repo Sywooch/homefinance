@@ -47,14 +47,28 @@ class BalanceSheet extends \yii\db\ActiveRecord
         return $this->hasMany(BalanceAmount::className(), ['balance_sheet_id' => 'id']);
     }
 	
-	public function getChangeVerification()
+	/**
+	For each account create an item. If previous balance sheet exists and has value - set it as default, otherwise - set to zero
+	*/
+	public function initAmounts()
 	{
-		//get previous sheet
-		$prev = BalanceSheet::find()
+		$account = Account::find()->all();
+		$prevBalance = $this->getPreviouBalance();
+	}
+	
+	private function getPreviouBalance()
+	{
+		return BalanceSheet::find()
 			->where(['<','period_start',$this->period_start])
 			->orderBy('period_start DESC')
 			->limit(1)
 			->one();
+	}
+	
+	public function getChangeVerification()
+	{
+		//get previous sheet
+		$prev = $this->getPreviouBalance();
 		if ($prev == null) return false;
 		//get joined list of balance items with their values
 		//get list of transactions between sheets dates and calculate expected results

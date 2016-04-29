@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'Account.name',
+            'account.name',
             'amount',
             'balanceSheet.period_start',
 
