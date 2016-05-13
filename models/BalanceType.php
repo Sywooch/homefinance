@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "balance_type".
@@ -48,6 +49,6 @@ class BalanceType extends \yii\db\ActiveRecord
      */
     public function getBalanceItems()
     {
-        return $this->hasMany(BalanceItem::className(), ['balance_type_id' => 'id']);
+        return $this->hasMany(BalanceItemExt::className(), ['balance_type_id' => 'id'])->where(['OR',['period_start'=>ArrayHelper::getColumn(Yii::$app->session['balanceSheets'], 'period_start')],['period_start'=>null]]);
     }
 }

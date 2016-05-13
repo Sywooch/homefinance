@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `homefin`.`account` (
   CONSTRAINT `fk_account_balance_item1`
     FOREIGN KEY (`balance_item_id`)
     REFERENCES `homefin`.`balance_item` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -128,16 +128,23 @@ CREATE TABLE IF NOT EXISTS `homefin`.`balance_amount` (
   CONSTRAINT `fk_balance_amount_balance_sheet1`
     FOREIGN KEY (`balance_sheet_id`)
     REFERENCES `homefin`.`balance_sheet` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_balance_amount_account1`
     FOREIGN KEY (`account_id`)
     REFERENCES `homefin`.`account` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-GRANT ALL ON `homefin`.* TO 'homefin';
+CREATE VIEW v_balance_item AS
+SELECT BI.`id`, BI.`order_num`, BI.`order_code`, BI.`name`, BI.`balance_type_id`, bs.period_start, SUM(amt.amount) AS amount, COUNT(ac.id) AS accounts_number
+FROM `balance_item` AS BI
+	LEFT OUTER JOIN account AS ac ON ac.balance_item_id = BI.id
+    LEFT OUTER JOIN balance_amount AS amt ON amt.account_id = ac.id
+    LEFT OUTER JOIN balance_sheet AS bs ON amt.balance_sheet_id = bs.id
+GROUP BY BI.`id`, BI.`order_num`, BI.`order_code`, BI.`name`, BI.`balance_type_id`, bs.period_start
+ORDER BY order_code, period_start DESC
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

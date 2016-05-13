@@ -18,7 +18,7 @@ use Yii;
  * @property BalanceType $balanceType
  */
 class BalanceItem extends \yii\db\ActiveRecord
-{
+{	
     /**
      * @inheritdoc
      */
@@ -58,7 +58,7 @@ class BalanceItem extends \yii\db\ActiveRecord
 	
 	public function RecalcValues()  
 	{  
-		$this->order_num = 1;
+		if ($this->order_num == null) $this->order_num = BalanceItem::find()->where(['balance_type_id'=>$this->balance_type_id])->max('order_num') + 1;
 		return true;  
 	}
 	
@@ -68,14 +68,6 @@ class BalanceItem extends \yii\db\ActiveRecord
     public function getAccounts()
     {
         return $this->hasMany(Account::className(), ['balance_item_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getBalanceAmounts()
-    {
-        return $this->hasMany(BalanceAmount::className(), ['balance_item_id' => 'id']);
     }
 
     /**

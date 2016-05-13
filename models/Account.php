@@ -45,7 +45,7 @@ class Account extends \yii\db\ActiveRecord
 	
 	public function RecalcValues()  
 	{  
-		$this->order_num = 1;
+		if ($this->order_num == null) $this->order_num = Account::find()->where(['balance_item_id'=>$this->balance_item_id])->max('order_num') + 1;
 		return true;  
 	}
 

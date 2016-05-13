@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\BalanceAmount;
+use app\models\BalanceItem;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -77,6 +78,19 @@ class BalanceAmountController extends Controller
             ]);
         }
     }
+	
+	public function actionCreateMaster($item_id, $sheet_id)
+    {
+        $item = BalanceItem::findOne($item_id);
+		foreach ($item->accounts as $account) {
+			$model = new BalanceAmount();
+			$model->account_id = $account->id;
+			$model->balance_sheet_id = $sheet_id;
+			$model->amount = 0;
+			$model->save();
+		}
+		return $this->redirect(['master/index']);
+    }
 
     /**
      * Updates an existing BalanceAmount model.
@@ -94,6 +108,15 @@ class BalanceAmountController extends Controller
             return $this->render('update', [
                 'model' => $model,
             ]);
+        }
+    }
+	
+	public function actionUpdateAmountAjax($id)
+    {
+        $model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['master/index']);
         }
     }
 
