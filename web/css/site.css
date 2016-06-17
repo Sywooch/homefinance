@@ -3,44 +3,20 @@ body {
     height: 100%;
 }
 
-.sheet_head_master{
-	margin-left: 300px;
+a.modal_edit {
+	border-bottom: deepskyblue;
+    border-bottom-style: dotted;
+    color: deepskyblue;
 }
 
-.sheet_head_details{
-	margin-left: 150px;
-}
-
-span.sheet_head {
-	margin-left: 20px;
-	display:inline-block;
-}
-
-span.item_name {
-	width:150px;
-	display:inline-block;
-}
-
-span.item_amount {
-	width:75px;
-	display:inline-block;
-}
-
-.master_balance .items_data h2 {
-	width:20%;
+.master_balance  h2 {
 	font-size:150%;
 }
 
-.balance-type-element h3 {
-	width:150px;
+.master_balance h3 {
 	font-size:100%;
 	display:inline-block;
 	margin:0px;
-}
-
-.balance-type-element div.list {
-	display:inline-block;
-	vertical-align:top;
 }
 
 form div.required label.control-label:after {

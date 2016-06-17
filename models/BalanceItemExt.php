@@ -34,7 +34,7 @@ class BalanceItemExt extends BalanceItem
 		} else {
 			return false;
 		}
-	}	
+	}
 	
 	public function afterSave($insert, $changedAttributes)
 	{
@@ -44,6 +44,22 @@ class BalanceItemExt extends BalanceItem
 		} else {
 			return false;
 		}
+	}
+	
+	public function getAmount($sheet_id)
+	{
+		$results = Yii::$app->db->createCommand("
+			SELECT SUM(amount)
+			FROM {{%balance_amount}} AS amt
+				INNER JOIN {{%account}} AS ac ON amt.account_id = ac.id
+			WHERE
+				ac.balance_item_id = :bi_id AND
+				amt.balance_sheet_id = :bs_id
+		")
+		->bindParam(':bi_id', $this->id)
+		->bindParam(':bs_id', $sheet_id)
+		->queryScalar();
+		return $results;
 	}
 	
 	public function showCreateLink($sheet) {

@@ -44,7 +44,7 @@ class BalanceSheet extends \yii\db\ActiveRecord
      */
     public function getBalanceAmounts()
     {
-        return $this->hasMany(BalanceAmount::className(), ['balance_sheet_id' => 'id']);
+        return $this->hasMany(BalanceAmount::className(), ['balance_sheet_id' => 'id'])->join('INNER JOIN', 'account', 'balance_amount.account_id = account.id')->orderBy('account.order_code');
     }
 	
 	/**
@@ -52,8 +52,15 @@ class BalanceSheet extends \yii\db\ActiveRecord
 	*/
 	public function initAmounts()
 	{
-		$account = Account::find()->all();
+		$accounts = Account::find()->orderBy('order_code')->all();
 		$prevBalance = $this->getPreviouBalance();
+		for ($i = 0; $i < count($accounts); $i++) {
+			$amount = new BalanceAmount();
+			$amount->account_id = $accounts[$i]->id;
+			$amount->balance_sheet_id = $this->id;
+			$amount->amount = $prevBalance ? $prevBalance->balanceAmounts[$i]->amount : 0;
+			$amount->save();
+		}
 	}
 	
 	private function getPreviouBalance()
@@ -63,6 +70,17 @@ class BalanceSheet extends \yii\db\ActiveRecord
 			->orderBy('period_start DESC')
 			->limit(1)
 			->one();
+	}
+	
+	public function prepareNext()
+	{
+		$this->is_month = true;
+		$last = BalanceSheet::find()->orderBy('period_start DESC')->limit(1)->one();
+		if ($last) {
+			$this->period_start = date("Y-m-d", strtotime("+1 month", strtotime($last->period_start)));
+		} else {
+			$this->period_start = date("Y-m-d");//TODO finish it
+		}
 	}
 	
 	public function getChangeVerification()

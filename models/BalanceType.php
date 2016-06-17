@@ -49,6 +49,6 @@ class BalanceType extends \yii\db\ActiveRecord
      */
     public function getBalanceItems()
     {
-        return $this->hasMany(BalanceItemExt::className(), ['balance_type_id' => 'id'])->where(['OR',['period_start'=>ArrayHelper::getColumn(Yii::$app->session['balanceSheets'], 'period_start')],['period_start'=>null]]);
+        return $this->hasMany(BalanceItemExt::className(), ['balance_type_id' => 'id']);
     }
 }

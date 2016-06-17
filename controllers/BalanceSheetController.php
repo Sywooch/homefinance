@@ -80,6 +80,18 @@ class BalanceSheetController extends Controller
             ]);
         }
     }
+	
+	public function actionCreateNext()
+	{
+		$model = new BalanceSheet();
+		$model->prepareNext();
+		
+		if($model->save()) {
+			$model->initAmounts();
+			return $this->redirect(['master/index']);
+		} else
+			var_dump($model->errors);
+	}
 
     /**
      * Updates an existing BalanceSheet model.

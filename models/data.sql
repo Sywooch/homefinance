@@ -138,13 +138,11 @@ CREATE TABLE IF NOT EXISTS `homefin`.`balance_amount` (
 ENGINE = InnoDB;
 
 CREATE VIEW v_balance_item AS
-SELECT BI.`id`, BI.`order_num`, BI.`order_code`, BI.`name`, BI.`balance_type_id`, bs.period_start, SUM(amt.amount) AS amount, COUNT(ac.id) AS accounts_number
+SELECT BI.`id`, BI.`order_num`, BI.`order_code`, BI.`name`, BI.`balance_type_id`, COUNT(ac.id) AS accounts_number
 FROM `balance_item` AS BI
 	LEFT OUTER JOIN account AS ac ON ac.balance_item_id = BI.id
-    LEFT OUTER JOIN balance_amount AS amt ON amt.account_id = ac.id
-    LEFT OUTER JOIN balance_sheet AS bs ON amt.balance_sheet_id = bs.id
-GROUP BY BI.`id`, BI.`order_num`, BI.`order_code`, BI.`name`, BI.`balance_type_id`, bs.period_start
-ORDER BY order_code, period_start DESC
+GROUP BY BI.`id`, BI.`order_num`, BI.`order_code`, BI.`name`, BI.`balance_type_id`
+ORDER BY order_code
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
