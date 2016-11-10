@@ -7,7 +7,6 @@ use yii\widgets\ActiveForm;
 /* @var $model app\models\BalanceItem */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-123
 <div class="balance-item-form">
 
     <?php $form = ActiveForm::begin(); ?>

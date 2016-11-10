@@ -1,0 +1,123 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  padding: 20px;
+}
+
+table, table tbody, table tr, table td {
+  border-spacing: 0;
+}
+
+.wizard {
+  width: 100%;
+  table-layout: fixed;
+  border: 0; /* border="0" */
+  border-collapse: collapse; /* cellspacing="0" */  
+  border-left: 1px solid black;
+}
+
+.wizard > tbody {
+  height: 32px;
+}
+
+.wizard > tr {
+  overflow: visible;
+  height: 32px;
+}
+
+.wizard > td {
+  padding: 0; /* cellpadding="0" */
+  overflow: visible;
+  background: #eee;
+  height: 32px;
+}
+
+.wizard-step-wrap {
+  height: 32px;
+  /*height: 50px \9;*/
+  margin: 0;
+  padding: 0;
+  position: relative;
+  background: #eee;
+  border: 1px solid black;
+  border-left: 0;
+}
+
+.wizard-step-wrap:nth-child(n) {
+  /*height: 50px \9;*/
+}
+
+.wizard-step-text {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  display: table;
+  z-index: 1;
+}
+
+.wizard-step-text table {
+  table-layout: fixed;
+  border: 0; /* border="0" */
+  border-collapse: collapse; /* cellspacing="0" */  
+  width: 100%;
+  height: 32px;
+}
+
+.wizard-step-text table td {
+  vertical-align: middle;
+  text-align: center;
+  padding-left: 17px1;
+  font: 14px/11px Tahoma, sans-serif;
+}
+
+.wizard-step-arrow-top {
+  margin: 0;
+  padding: 0;
+  font-size:0px;
+  line-height:0px;
+  content:'';
+  position:absolute;
+  top:0;
+  right:-16px;
+  width:0;
+  height:0;
+  border-top:16px solid transparent;
+  border-bottom:16px solid transparent;
+  z-index:100;
+  border-left:16px solid #eee;
+}
+
+.wizard-step-arrow-bottom {
+  margin: 0;
+  padding: 0;
+  font-size:0px;
+  line-height:0px;
+  content:'';
+  position:absolute;
+  top:-1px;
+  right:-17px;
+  width:0;
+  height:0;
+  border-top:17px solid transparent;
+  border-bottom:17px solid transparent;
+  z-index:99;
+  border-left:17px solid black;
+}
+
+.wizard-prev .wizard-step-wrap {background: #5BC0DE;} /* цвет предыдущих шагов */
+.wizard-prev .wizard-step-arrow-top {border-left-color: #5BC0DE;}
+
+.wizard-current .wizard-step-wrap {background: #5CB85C; } /* цвет текущего шага */
+.wizard-current .wizard-step-arrow-top {border-left-color: #5CB85C; } /* должно совпадать с цветом основного блока */
+.wizard-current .wizard-step-text table td{font-weight: bold;color: white;text-shadow: 0 1px 0 #003E00;} /* стиль текста */
+
+.wizard-next .wizard-step-wrap {background: #eee;} /* цвет следующих шагов */
+.wizard-next .wizard-step-arrow-top {border-left-color: #eee;}
+
+.wizard-current div span {border-left: 30px solid #008A00;}

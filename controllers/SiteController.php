@@ -91,4 +91,13 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
+	
+	public function actionDrop()
+	{
+		$list = \app\models\BalanceItem::find()->all();
+		foreach ($list as $item) $item->delete();
+		$list = \app\models\BalanceSheet::find()->all();
+		foreach ($list as $item) $item->delete();
+		return $this->redirect(['index']);
+	}
 }

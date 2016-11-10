@@ -116,7 +116,7 @@ class BalanceAmountController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['master/index']);
+            return $this->redirect(['balance-item/index']);
         }
     }
 

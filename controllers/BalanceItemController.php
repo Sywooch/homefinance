@@ -4,10 +4,13 @@ namespace app\controllers;
 
 use Yii;
 use app\models\BalanceItem;
+use app\models\BalanceItemExt;
+use app\models\BalanceSheet;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\Json;
 
 /**
  * BalanceItemController implements the CRUD actions for BalanceItem model.
@@ -31,10 +34,9 @@ class BalanceItemController extends Controller
      * @return mixed
      */
     public function actionIndex()
-    {
+    {		
         $dataProvider = new ActiveDataProvider([
-            'query' => BalanceItem::find()->
-			orderBy('order_code'),
+            'query' => BalanceItemExt::find()->orderBy('order_code'),
         ]);
 
         return $this->render('index', [
@@ -63,8 +65,13 @@ class BalanceItemController extends Controller
     {
         $model = new BalanceItem();
 
-        if ($model->load(Yii::$app->request->post()) && $model->RecalcValues() && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+			$result = $model->initAccounts();
+			if ($result) {
+				var_dump($result);
+				die();
+			}
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -82,7 +89,7 @@ class BalanceItemController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->RecalcValues() && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [

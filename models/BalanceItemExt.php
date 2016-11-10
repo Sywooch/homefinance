@@ -5,13 +5,14 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "balance_item".
+ * This is the model class for table "v_balance_item".
  *
  * @property integer $id
  * @property integer $order_num
  * @property string $order_code
  * @property string $name
  * @property integer $balance_type_id
+ * @property integer $accounts_number
  *
  * @property Account[] $accounts
  * @property BalanceAmount[] $balanceAmounts
@@ -20,6 +21,12 @@ use Yii;
 class BalanceItemExt extends BalanceItem
 {
 	private static $use_view = true;
+	private $balanceSheets;
+	
+	public static function primaryKey ()
+	{
+		return ['id'];
+	}
 		
 	public static function tableName()
     {
@@ -46,8 +53,29 @@ class BalanceItemExt extends BalanceItem
 		}
 	}
 	
+	private function LoadBalances()
+	{
+		if (!$this->balanceSheets)
+			$this->balanceSheets = BalanceSheet::LastTwo();
+	}
+	
+	public function getCurrentAmount()
+	{
+		$this->LoadBalances();
+		if (count($this->balanceSheets) >= 1) return $this->getAmount($this->balanceSheets[0]->id);
+		else return null;
+	}
+	
+	public function getPreviousAmount()
+	{
+		$this->LoadBalances();
+		if (count($this->balanceSheets) >= 2) return $this->getAmount($this->balanceSheets[1]->id);
+		else return null;
+	}
+	
 	public function getAmount($sheet_id)
 	{
+		$id = $this->id;
 		$results = Yii::$app->db->createCommand("
 			SELECT SUM(amount)
 			FROM {{%balance_amount}} AS amt
@@ -56,7 +84,7 @@ class BalanceItemExt extends BalanceItem
 				ac.balance_item_id = :bi_id AND
 				amt.balance_sheet_id = :bs_id
 		")
-		->bindParam(':bi_id', $this->id)
+		->bindParam(':bi_id', $id)
 		->bindParam(':bs_id', $sheet_id)
 		->queryScalar();
 		return $results;

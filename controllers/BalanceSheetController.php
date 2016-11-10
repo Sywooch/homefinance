@@ -88,7 +88,7 @@ class BalanceSheetController extends Controller
 		
 		if($model->save()) {
 			$model->initAmounts();
-			return $this->redirect(['master/index']);
+			return $this->redirect(['balance-item/index']);
 		} else
 			var_dump($model->errors);
 	}

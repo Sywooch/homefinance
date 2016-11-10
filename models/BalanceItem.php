@@ -18,7 +18,38 @@ use Yii;
  * @property BalanceType $balanceType
  */
 class BalanceItem extends \yii\db\ActiveRecord
-{	
+{
+	public function initAccounts()
+	{
+		//create default account for balance Item
+		$account = new Account();
+		$account->name = $this->name;
+		$account->balance_item_id = $this->id;
+		$errors = [];
+		if ($account->save()) {
+			//for all existed balance items create amount for default account
+			$bSheets = BalanceSheet::find()->all();
+			$success = true;
+			foreach ($bSheets as $sheet) {
+				if (isset($sheet->id)) {
+					$amount = new BalanceAmount();
+					$amount->account_id = $account->id;
+					$amount->balance_sheet_id = $sheet->id;
+					$amount->amount = 0;
+					if (!$amount->save()) {
+						$success = false;
+						$errors['amount'] = $amount->errors;
+					}
+				}
+			}
+			if ($success) return false;
+		} else {
+			$errors['account'] = $account->errors;
+		}
+		$errors['message'] = "Errors in BalanceItem::initAccounts()";
+		return $errors;
+	}
+	
     /**
      * @inheritdoc
      */
@@ -35,6 +66,7 @@ class BalanceItem extends \yii\db\ActiveRecord
 	{
 		if (parent::beforeValidate()) {
 			// ...custom code here...
+			if ($this->order_num == null) $this->order_num = BalanceItem::find()->where(['balance_type_id'=>$this->balance_type_id])->max('order_num') + 1;
 			$this->order_code = $this->balanceType->order_code . $this->order_num;
 			return true;
 		} else {
@@ -52,15 +84,9 @@ class BalanceItem extends \yii\db\ActiveRecord
             'order_num' => 'Order Num',
             'order_code' => 'Order Code',
             'name' => 'Name',
-            'balance_type_id' => 'Balance Type ID',
+            'balance_type_id' => 'Balance Type',
         ];
     }
-	
-	public function RecalcValues()  
-	{  
-		if ($this->order_num == null) $this->order_num = BalanceItem::find()->where(['balance_type_id'=>$this->balance_type_id])->max('order_num') + 1;
-		return true;  
-	}
 	
 	/**
     * @return \yii\db\ActiveQuery

@@ -3,22 +3,6 @@ body {
     height: 100%;
 }
 
-a.modal_edit {
-	border-bottom: deepskyblue;
-    border-bottom-style: dotted;
-    color: deepskyblue;
-}
-
-.master_balance  h2 {
-	font-size:150%;
-}
-
-.master_balance h3 {
-	font-size:100%;
-	display:inline-block;
-	margin:0px;
-}
-
 form div.required label.control-label:after {
   content:" * ";
   color:red;

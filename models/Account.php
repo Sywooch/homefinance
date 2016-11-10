@@ -19,7 +19,39 @@ use Yii;
  * @property Transaction[] $transactions0
  */
 class Account extends \yii\db\ActiveRecord
-{
+{	
+	private $balanceSheets;
+	
+	private function LoadBalances()
+	{
+		if (!$this->balanceSheets)
+			$this->balanceSheets = BalanceSheet::LastTwo();
+	}
+	
+	public function getCurrentAmount()
+	{
+		$this->LoadBalances();
+		if (isset($this->balanceSheets[0]->id)) return $this->getAmount($this->balanceSheets[0]->id);
+		else return null;
+	}
+	
+	public function getPreviousAmount()
+	{
+		$this->LoadBalances();
+		if (isset($this->balanceSheets[1]->id)) return $this->getAmount($this->balanceSheets[1]->id);
+		else return null;
+	}
+	
+	public function getAmount($sheet_id)
+	{
+		$amount = BalanceAmount::find()->where([
+			'account_id'=>$this->id,
+			'balance_sheet_id'=>$sheet_id,
+		])->one();
+		if ($amount) return $amount;
+		else return null;
+	}
+	
     /**
      * @inheritdoc
      */
@@ -36,17 +68,12 @@ class Account extends \yii\db\ActiveRecord
 	{
 		if (parent::beforeValidate()) {
 			// ...custom code here...
+			if ($this->order_num == null) $this->order_num = Account::find()->where(['balance_item_id'=>$this->balance_item_id])->max('order_num') + 1;
 			$this->order_code = $this->balanceItem->order_code . "." . $this->order_num;
 			return true;
 		} else {
 			return false;
 		}
-	}
-	
-	public function RecalcValues()  
-	{  
-		if ($this->order_num == null) $this->order_num = Account::find()->where(['balance_item_id'=>$this->balance_item_id])->max('order_num') + 1;
-		return true;  
 	}
 
     /**

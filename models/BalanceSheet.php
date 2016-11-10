@@ -15,6 +15,29 @@ use Yii;
  */
 class BalanceSheet extends \yii\db\ActiveRecord
 {
+	public static function NotSet()
+	{
+		$model = new BalanceSheet();
+		$model->period_start = "not set";
+		return $model;
+	}
+	
+	public static function LastTwo()
+	{
+		$balanceSheets = BalanceSheet::find()->select('id, period_start')->orderBy('period_start DESC')->limit(2)->all();
+		while (count($balanceSheets) < 2) $balanceSheets[] = BalanceSheet::NotSet();
+		return $balanceSheets;
+	}
+	
+	public function getTotal($is_active)
+	{
+		return $this->getBalanceAmounts()
+		->join('INNER JOIN', 'balance_item', 'account.balance_item_id = balance_item.id')
+		->join('INNER JOIN', 'balance_type', 'balance_item.balance_type_id = balance_type.id')
+		->where(['balance_type.is_active' => $is_active])
+		->sum('balance_amount.amount');
+	}
+
     /**
      * @inheritdoc
      */
@@ -79,7 +102,7 @@ class BalanceSheet extends \yii\db\ActiveRecord
 		if ($last) {
 			$this->period_start = date("Y-m-d", strtotime("+1 month", strtotime($last->period_start)));
 		} else {
-			$this->period_start = date("Y-m-d");//TODO finish it
+			$this->period_start = (new \DateTime('first day of previous month'))->format("Y-m-d");
 		}
 	}
 	
