@@ -10,8 +10,10 @@ use Yii;
  * @property integer $id
  * @property string $period_start
  * @property integer $is_month
+ * @property integer $user_id
  *
  * @property BalanceAmount[] $balanceAmounts
+ * @property User $user
  */
 class BalanceSheet extends \yii\db\ActiveRecord
 {
@@ -44,9 +46,9 @@ class BalanceSheet extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['period_start', 'is_month'], 'required'],
+            [['period_start', 'is_month', 'user_id'], 'required'],
             [['period_start'], 'safe'],
-            [['is_month'], 'integer']
+            [['is_month', 'user_id'], 'integer']
         ];
     }
 
@@ -59,6 +61,7 @@ class BalanceSheet extends \yii\db\ActiveRecord
             'id' => 'ID',
             'period_start' => 'Period Start',
             'is_month' => 'Is Month',
+            'user_id' => 'User ID',
         ];
     }
 
@@ -146,4 +149,12 @@ class BalanceSheet extends \yii\db\ActiveRecord
 		->queryAll();
 		return $results;
 	}
+	
+	 /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
 }

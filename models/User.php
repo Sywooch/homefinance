@@ -1,10 +1,19 @@
 <?php
 
 namespace app\models;
+use Yii;
 
-class User extends \yii\base\Object implements \yii\web\IdentityInterface
+/**
+ * This is the model class for table "user".
+ *
+ * @property integer $id
+ * @property string $login
+ *
+ * @property BalanceItem[] $balanceItems
+ * @property BalanceSheet[] $balanceSheets
+ */
+class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
-    public $id;
     public $username;
     public $password;
     public $authKey;
@@ -99,5 +108,51 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
     public function validatePassword($password)
     {
         return $this->password === $password;
+    }
+	
+	    /**
+     * @inheritdoc
+     */
+    public static function tableName()
+    {
+        return 'user';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['login'], 'required'],
+            [['login'], 'string', 'max' => 255]
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'login' => 'Login',
+        ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBalanceItems()
+    {
+        return $this->hasMany(BalanceItem::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBalanceSheets()
+    {
+        return $this->hasMany(BalanceSheet::className(), ['user_id' => 'id']);
     }
 }

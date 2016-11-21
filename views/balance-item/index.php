@@ -45,8 +45,15 @@ $this->params['breadcrumbs'][] = $this->title;
 					]);
 				}
 			],
-
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+				'class' => 'yii\grid\ActionColumn',
+				//'template' => '{view}'.($model->immutable ? '' : {update} {delete}',
+				'visibleButtons' => [
+					'view'=>function ($model, $key, $index) {return true;},
+					'update'=>function ($model, $key, $index) {return !$model->immutable;},
+					'delete'=>function ($model, $key, $index) {return !$model->immutable;},
+				],
+			],
         ],
     ]); ?>
     <p>

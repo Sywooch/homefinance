@@ -12,10 +12,13 @@ use Yii;
  * @property string $order_code
  * @property string $name
  * @property integer $balance_type_id
+ * @property integer $user_id
+ * @property integer $immutable
  *
  * @property Account[] $accounts
  * @property BalanceAmount[] $balanceAmounts
  * @property BalanceType $balanceType
+ * @property User $user
  */
 class BalanceItem extends \yii\db\ActiveRecord
 {
@@ -61,8 +64,8 @@ class BalanceItem extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['order_num', 'order_code', 'name', 'balance_type_id'], 'required'],
-            [['order_num', 'balance_type_id'], 'integer'],
+            [['order_num', 'order_code', 'name', 'balance_type_id', 'user_id'], 'required'],
+            [['order_num', 'balance_type_id', 'user_id', 'immutable'], 'integer'],
             [['order_code', 'name'], 'string', 'max' => 45]
         ];
     }
@@ -90,6 +93,8 @@ class BalanceItem extends \yii\db\ActiveRecord
             'order_code' => 'Order Code',
             'name' => 'Name',
             'balance_type_id' => 'Balance Type',
+            'user_id' => 'User ID',
+            'immutable' => 'Immutable',
         ];
     }
 	
@@ -108,4 +113,12 @@ class BalanceItem extends \yii\db\ActiveRecord
     {
         return $this->hasOne(BalanceType::className(), ['id' => 'balance_type_id']);
     }
+	
+    /** 
+     * @return \yii\db\ActiveQuery 
+     */ 
+    public function getUser() 
+    { 
+        return $this->hasOne(User::className(), ['id' => 'user_id']); 
+    } 
 }

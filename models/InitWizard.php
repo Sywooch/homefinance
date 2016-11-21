@@ -171,6 +171,7 @@ class InitWizard extends BasicProcess
 			$model = new BalanceItem();
 			$model->prepareNew();
 			$model->name = $step->title;
+			$model->immutable = $step->buttons != 'yesno' ? 1 : 0;
 			$model->balance_type_id = $step->type_id;
 			// save balance item
 			if ($model->save()) {
@@ -182,7 +183,7 @@ class InitWizard extends BasicProcess
 					return false;
 				} else {
 					// if success, fill in the amount
-					$model->accounts[0]->balanceAmounts[1]->amount = $_POST['init_value'];
+					$model->accounts[0]->balanceAmounts[1]->amount = 0 + $_POST['init_value'];
 					// save amount
 					if(!$model->accounts[0]->balanceAmounts[1]->save()) {
 						// if failed

@@ -27,10 +27,10 @@ class BalanceItemExt extends BalanceItem
 	{
 		return ['id'];
 	}
-		
+	
 	public static function tableName()
     {
-        return BalanceItemExt::$use_view ? 'v_balance_item' : 'balance_item';
+        return 'balance_item';
     }
 	
 	public function beforeSave($insert)
@@ -51,6 +51,11 @@ class BalanceItemExt extends BalanceItem
 		} else {
 			return false;
 		}
+	}
+	
+	public function getaccounts_number()
+	{
+		return count($this->accounts);
 	}
 	
 	private function LoadBalances()

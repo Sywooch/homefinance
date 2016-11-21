@@ -52,5 +52,30 @@ class BasicProcess extends Model
 		//return false;
 		return true;
 	}
+	
+	private function getStepIndex($step_code)
+	{
+		for ($i = 0; $i < count($this->steps); $i++) {
+			if ($this->steps[$i]->code == $step_code) {
+				return $i;
+			}
+		}
+		return 0;
+	}
+	
+	public function getStep($step_code)
+	{
+		return $this->steps[$this->getStepIndex($step_code)];
+	}
+	
+	public function hasNext($step_code)
+	{
+		return $this->steps[count($this->steps) - 1]->code != $step_code;
+	}
+	
+	public function getNext($step_code)
+	{
+		return $this->steps[$this->getStepIndex($step_code) + 1];
+	}
 }
 ?>
