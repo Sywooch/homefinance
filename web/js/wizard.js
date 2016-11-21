@@ -1,5 +1,5 @@
 function createWizard(input) {
-  var output = "<div style='padding-right:30px'><table class='wizard'><tbody><tr>";
+  var output = "<div><table class='wizard'><tbody><tr>";
   var length = input.length;
   var count = 0;
   var post_current = false;

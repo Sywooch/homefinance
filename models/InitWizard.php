@@ -3,7 +3,7 @@
 namespace app\models;
 
 use Yii;
-use Yii\helpers\Json;
+use \yii\helpers\Json;
 
 class InitWizard extends BasicProcess
 {
@@ -95,7 +95,7 @@ class InitWizard extends BasicProcess
 			'title'=>'Отпуск',
 			'stage'=>'Пассивы - Резервы',
 			'type_id'=>'5',
-			'message'=>'Всем нужно отдыхать, и на отдых часто нужны деньги. Источником денег для отпуска могут быть кредиты, но лучше формировать резеры. <strong>Резервы</strong> - это специальные счета, показывающие, что часть своих денег вы решили потратить на что-то конкретное, при этом текущее использование этих денег.<br/>Классический банковский продукт - целевой накопительный счет - позиционируется для решения той же задачи, но он, являясь активом, подменяет собой понятие резерва (пассива), что приводит к невозможности использовать те же деньги более эффективно.',
+			'message'=>'Всем нужно отдыхать, и на отдых часто нужны деньги. Источником денег для отпуска могут быть кредиты, но лучше формировать резеры. <strong>Резервы</strong> - это специальные счета, показывающие, что часть своих денег вы решили потратить на что-то конкретное, при этом не ограничивая текущее использование этих денег.<br/>Классический банковский продукт - целевой накопительный счет - позиционируется для решения той же задачи, но он, являясь активом, подменяет собой понятие резерва (пассива), что приводит к невозможности использовать те же деньги более эффективно.',
 			'buttons'=>'yesno',
 		],
 		[
@@ -167,16 +167,31 @@ class InitWizard extends BasicProcess
 	private function createBalanceItem($step)
 	{
 		if ($step->type_id > '') {
+			// create balance item
 			$model = new BalanceItem();
+			$model->prepareNew();
 			$model->name = $step->title;
 			$model->balance_type_id = $step->type_id;
+			// save balance item
 			if ($model->save()) {
+				// create accounts and amounts (balance sheets already exist)
 				$result = $model->initAccounts();
 				if ($result) {
+					// if accounts were not created
 					$step->error = Json::encode($result);
 					return false;
+				} else {
+					// if success, fill in the amount
+					$model->accounts[0]->balanceAmounts[1]->amount = $_POST['init_value'];
+					// save amount
+					if(!$model->accounts[0]->balanceAmounts[1]->save()) {
+						// if failed
+						$step->error = Json::encode($model->accounts[0]->balanceAmounts[1]->errors);
+						return false;
+					}
 				}
 			} else {
+				// if balance item was not saved
 				$step->error = Json::encode($model->errors);
 				return false;
 			}

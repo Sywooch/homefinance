@@ -1,14 +1,12 @@
-* {
+.wizard-wrapper * {
   margin: 0;
   padding: 0;
 }
-
-body {
-  padding: 20px;
-}
-
-table, table tbody, table tr, table td {
+.wizard-wrapper table, table tbody, table tr, table td {
   border-spacing: 0;
+}
+.wizard-wrapper {
+  padding-right: 20px;
 }
 
 .wizard {
@@ -21,6 +19,7 @@ table, table tbody, table tr, table td {
 
 .wizard > tbody {
   height: 32px;
+  margin: 20px;
 }
 
 .wizard > tr {
@@ -110,14 +109,28 @@ table, table tbody, table tr, table td {
   border-left:17px solid black;
 }
 
-.wizard-prev .wizard-step-wrap {background: #5BC0DE;} /* цвет предыдущих шагов */
-.wizard-prev .wizard-step-arrow-top {border-left-color: #5BC0DE;}
+.wizard-prev .wizard-step-wrap {background: #5CB85C;} /* цвет предыдущих шагов */
+.wizard-prev .wizard-step-arrow-top {border-left-color: #5CB85C;}
 
-.wizard-current .wizard-step-wrap {background: #5CB85C; } /* цвет текущего шага */
-.wizard-current .wizard-step-arrow-top {border-left-color: #5CB85C; } /* должно совпадать с цветом основного блока */
+.wizard-current .wizard-step-wrap {background: #5BC0DE; } /* цвет текущего шага */
+.wizard-current .wizard-step-arrow-top {border-left-color: #5BC0DE; } /* должно совпадать с цветом основного блока */
 .wizard-current .wizard-step-text table td{font-weight: bold;color: white;text-shadow: 0 1px 0 #003E00;} /* стиль текста */
 
 .wizard-next .wizard-step-wrap {background: #eee;} /* цвет следующих шагов */
 .wizard-next .wizard-step-arrow-top {border-left-color: #eee;}
+
+
+.wizard-ok-icon
+{
+	color:#5CB85C;
+}
+.wizard-pencil-icon
+{
+	color:#5BC0DE;
+}
+.wizard-arrow-right-icon
+{
+	color:#eee;
+}
 
 .wizard-current div span {border-left: 30px solid #008A00;}

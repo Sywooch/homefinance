@@ -19,6 +19,11 @@ use Yii;
  */
 class BalanceItem extends \yii\db\ActiveRecord
 {
+	public function prepareNew()
+	{
+		$this->user_id = 1;
+	}
+	
 	public function initAccounts()
 	{
 		//create default account for balance Item

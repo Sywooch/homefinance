@@ -98,6 +98,7 @@ class BalanceSheet extends \yii\db\ActiveRecord
 	public function prepareNext()
 	{
 		$this->is_month = true;
+		$this->user_id = 1;
 		$last = BalanceSheet::find()->orderBy('period_start DESC')->limit(1)->one();
 		if ($last) {
 			$this->period_start = date("Y-m-d", strtotime("+1 month", strtotime($last->period_start)));

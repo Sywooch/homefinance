@@ -64,6 +64,7 @@ class BalanceItemController extends Controller
     public function actionCreate()
     {
         $model = new BalanceItem();
+		$model->prepareNew();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 			$result = $model->initAccounts();
