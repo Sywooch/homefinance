@@ -183,12 +183,10 @@ INSERT INTO `homefin`.`balance_type` (`id`, `is_det`, `is_active`, `order_code`,
 INSERT INTO `homefin`.`balance_type` (`id`, `is_det`, `is_active`, `order_code`, `name`) VALUES (3, 1, 1, '1.3.', 'Низколиквидные активы');
 INSERT INTO `homefin`.`balance_type` (`id`, `is_det`, `is_active`, `order_code`, `name`) VALUES (4, 1, 0, '2.1.', 'Текущий остаток');
 INSERT INTO `homefin`.`balance_type` (`id`, `is_det`, `is_active`, `order_code`, `name`) VALUES (5, 1, 0, '2.2.', 'Резервы краткосрочные');
-INSERT INTO `homefin`.`balance_type` (`id`, `is_det`, `is_active`, `order_code`, `name`) VALUES (6, 1, 0, '2.3.', 'Резервы среднесрочные');
-INSERT INTO `homefin`.`balance_type` (`id`, `is_det`, `is_active`, `order_code`, `name`) VALUES (7, 1, 0, '2.4.', 'Резервы долгосрочные');
-INSERT INTO `homefin`.`balance_type` (`id`, `is_det`, `is_active`, `order_code`, `name`) VALUES (8, 1, 0, '2.5.', 'Обязательства краткосрочные');
-INSERT INTO `homefin`.`balance_type` (`id`, `is_det`, `is_active`, `order_code`, `name`) VALUES (9, 1, 0, '2.6.', 'Обязательства среднесрочные');
-INSERT INTO `homefin`.`balance_type` (`id`, `is_det`, `is_active`, `order_code`, `name`) VALUES (10, 1, 0, '2.7.', 'Обязательства долгосрочные');
-INSERT INTO `homefin`.`balance_type` (`id`, `is_det`, `is_active`, `order_code`, `name`) VALUES (11, 1, 0, '2.8.', 'Базовый капитал');
+INSERT INTO `homefin`.`balance_type` (`id`, `is_det`, `is_active`, `order_code`, `name`) VALUES (6, 1, 0, '2.3.', 'Обязательства краткосрочные');
+INSERT INTO `homefin`.`balance_type` (`id`, `is_det`, `is_active`, `order_code`, `name`) VALUES (7, 1, 0, '2.4.', 'Обязательства среднесрочные');
+INSERT INTO `homefin`.`balance_type` (`id`, `is_det`, `is_active`, `order_code`, `name`) VALUES (8, 1, 0, '2.5.', 'Обязательства долгосрочные');
+INSERT INTO `homefin`.`balance_type` (`id`, `is_det`, `is_active`, `order_code`, `name`) VALUES (9, 1, 0, '2.6.', 'Базовый капитал');
 
 COMMIT;
 

@@ -120,15 +120,15 @@
 .wizard-next .wizard-step-arrow-top {border-left-color: #eee;}
 
 
-.wizard-ok-icon
+.wizard-prev-icon
 {
 	color:#5CB85C;
 }
-.wizard-pencil-icon
+.wizard-current-icon
 {
 	color:#5BC0DE;
 }
-.wizard-arrow-right-icon
+.wizard-next-icon
 {
 	color:#eee;
 }

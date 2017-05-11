@@ -41,13 +41,18 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
-			['label' => 'Balance', 'url' => ['/balance-item/index']],
-			['label' => 'Balance History', 'url' => ['/balance-sheet/index']],
+			['label' => 'Current Status', 'url' => ['/balance-item/index']],
+			['label' => 'Status History', 'url' => ['/balance-sheet/index']],
 			['label' => 'Unit Tests', 
 				'items' => [
 					['label' => 'Accounts', 'url' => ['/account/index']],
 					['label' => 'Transactions', 'url' => ['/transaction/index']],
 					['label' => 'Users', 'url' => ['/user/index']],
+				]
+			],
+			['label' => 'Admin', 
+				'items' => [
+					['label' => 'Balance Types', 'url' => ['/balance-type/index']],
 				]
 			],
             Yii::$app->user->isGuest ?
