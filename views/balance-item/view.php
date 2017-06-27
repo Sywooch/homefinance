@@ -33,7 +33,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'order_code',
             'name',
 			'balanceType.name:text:Type',
-			'immutable:boolean',
         ],
     ]) ?>
 

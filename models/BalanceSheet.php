@@ -9,7 +9,6 @@ use Yii;
  *
  * @property integer $id
  * @property string $period_start
- * @property integer $is_month
  * @property integer $user_id
  *
  * @property BalanceAmount[] $balanceAmounts
@@ -17,6 +16,15 @@ use Yii;
  */
 class BalanceSheet extends \yii\db\ActiveRecord
 {
+	private $_threshold;
+	
+	public function getThreshold() {
+		if (!($this->_threshold > "")) {
+			$this->_threshold = SystemSettings::loadValue('balance_threshold');
+		}
+		return $this->_threshold;
+	}
+	
 	public static function NotSet()
 	{
 		$model = new BalanceSheet();
@@ -36,7 +44,7 @@ class BalanceSheet extends \yii\db\ActiveRecord
 		return $this->getBalanceAmounts()
 		->join('INNER JOIN', 'balance_item', 'account.balance_item_id = balance_item.id')
 		->join('INNER JOIN', 'balance_type', 'balance_item.balance_type_id = balance_type.id')
-		->where(['balance_type.is_active' => $is_active])
+		->where(['balance_type.balance_type_category_id' => $is_active ? 1 : 2])
 		->sum('balance_amount.amount');
 	}
 
@@ -46,9 +54,9 @@ class BalanceSheet extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['period_start', 'is_month', 'user_id'], 'required'],
+            [['period_start', 'user_id'], 'required'],
             [['period_start'], 'safe'],
-            [['is_month', 'user_id'], 'integer']
+            [['user_id'], 'integer']
         ];
     }
 
@@ -60,7 +68,6 @@ class BalanceSheet extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'period_start' => 'Period Start',
-            'is_month' => 'Is Month',
             'user_id' => 'User ID',
         ];
     }
@@ -70,7 +77,7 @@ class BalanceSheet extends \yii\db\ActiveRecord
      */
     public function getBalanceAmounts()
     {
-        return $this->hasMany(BalanceAmount::className(), ['balance_sheet_id' => 'id'])->join('INNER JOIN', 'account', 'balance_amount.account_id = account.id')->orderBy('account.order_code');
+        return $this->hasMany(BalanceAmount::className(), ['balance_sheet_id' => 'id'])->joinWith('account')->orderBy('account.order_code');
     }
 	
 	/**
@@ -100,7 +107,6 @@ class BalanceSheet extends \yii\db\ActiveRecord
 	
 	public function prepareNext()
 	{
-		$this->is_month = true;
 		$this->user_id = 1;
 		$last = BalanceSheet::find()->orderBy('period_start DESC')->limit(1)->one();
 		if ($last) {
@@ -129,12 +135,16 @@ class BalanceSheet extends \yii\db\ActiveRecord
 			(amntOld.amount - 
 				IFNULL((sum(transFrom.amount) * count(DISTINCT transFrom.id) / count(transFrom.id)), 0) + 
 				IFNULL((sum(transTo.amount) * count(DISTINCT transTo.id) / count(transTo.id)), 0)
-			) - amntNew.amount AS Balance
+			) - amntNew.amount AS Result
 		FROM {{%balance_item}} AS item
-			LEFT OUTER JOIN {{%balance_amount}} AS amntOld ON item.id = amntOld.balance_item_id AND amntOld.balance_sheet_id = :old_id
-			LEFT OUTER JOIN {{%balance_amount}} AS amntNew ON item.id = amntNew.balance_item_id AND amntNew.balance_sheet_id = :new_id
-			LEFT OUTER JOIN {{%transaction}} AS transFrom ON transFrom.from_item_id = item.id
-			LEFT OUTER JOIN {{%transaction}} AS transTo ON transTo.to_item_id = item.id
+			LEFT OUTER JOIN {{%ref_balance_item}} AS ref ON item.ref_balance_item_id = ref.id
+			LEFT OUTER JOIN {{%account}} AS acc ON item.id = acc.balance_item_id
+			LEFT OUTER JOIN {{%balance_amount}} AS amntOld ON acc.id = amntOld.account_id AND amntOld.balance_sheet_id = :old_id
+			LEFT OUTER JOIN {{%balance_amount}} AS amntNew ON acc.id = amntNew.account_id AND amntNew.balance_sheet_id = :new_id
+			LEFT OUTER JOIN {{%transaction}} AS transFrom ON transFrom.account_from_id = acc.id
+			LEFT OUTER JOIN {{%transaction}} AS transTo ON transTo.account_to_id = acc.id
+		WHERE
+			ref.id IS NULL OR ref.is_calculated = false
 		GROUP BY
 			item.id,
 			item.order_code,
@@ -147,6 +157,8 @@ class BalanceSheet extends \yii\db\ActiveRecord
 		->bindParam(':old_id', $prev->id)
 		->bindParam(':new_id', $this->id)
 		->queryAll();
+		for ($i = 0; $i < count($results); $i++)
+			$results[$i]['threshold'] = ($results[$i]['Result'] > $this->threshold) ? 'over' : 'in';
 		return $results;
 	}
 	

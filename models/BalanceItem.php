@@ -13,18 +13,31 @@ use Yii;
  * @property string $name
  * @property integer $balance_type_id
  * @property integer $user_id
- * @property integer $immutable
+ * @property integer $ref_balance_item_id
  *
  * @property Account[] $accounts
- * @property BalanceAmount[] $balanceAmounts
  * @property BalanceType $balanceType
  * @property User $user
+ * @property RefBalanceItem $refBalanceItem
  */
 class BalanceItem extends \yii\db\ActiveRecord
 {
-	public function prepareNew()
+	public function getImmutable()
+	{
+		if ($this->refBalanceItem) {
+			return $this->refBalanceItem->is_calculated;
+		}
+		return false;
+	}
+	
+	public function prepareNew($refItem = null)
 	{
 		$this->user_id = 1;
+		if ($refItem) {
+			$this->ref_balance_item_id = $refItem->id;
+			$this->name = $refItem->name;
+			$this->balance_type_id = $refItem->balance_type_id;
+		}
 	}
 	
 	public function initAccounts()
@@ -65,7 +78,7 @@ class BalanceItem extends \yii\db\ActiveRecord
     {
         return [
             [['order_num', 'order_code', 'name', 'balance_type_id', 'user_id'], 'required'],
-            [['order_num', 'balance_type_id', 'user_id', 'immutable'], 'integer'],
+            [['order_num', 'balance_type_id', 'user_id', 'ref_balance_item_id'], 'integer'],
             [['order_code', 'name'], 'string', 'max' => 45]
         ];
     }
@@ -94,7 +107,7 @@ class BalanceItem extends \yii\db\ActiveRecord
             'name' => 'Name',
             'balance_type_id' => 'Balance Type',
             'user_id' => 'User ID',
-            'immutable' => 'Immutable',
+            'ref_balance_item_id' => 'Ref Balance Item ID',
         ];
     }
 	
@@ -121,4 +134,12 @@ class BalanceItem extends \yii\db\ActiveRecord
     { 
         return $this->hasOne(User::className(), ['id' => 'user_id']); 
     } 
+
+   /**
+    * @return \yii\db\ActiveQuery
+    */
+   public function getRefBalanceItem()
+   {
+       return $this->hasOne(RefBalanceItem::className(), ['id' => 'ref_balance_item_id']);
+   }
 }

@@ -9,24 +9,30 @@ use yii\helpers\ArrayHelper;
  * This is the model class for table "balance_type".
  *
  * @property integer $id
- * @property integer $is_det
- * @property integer $is_active
  * @property string $order_code
  * @property string $name
+ * @property integer $balance_type_category_id
  *
  * @property BalanceItem[] $balanceItems
+ * @property BalanceTypeCategory $balanceTypeCategory
+ * @property RefBalanceItem[] $refBalanceItems
  */
 class BalanceType extends \yii\db\ActiveRecord
 {
+	public function getAvailableCategories()
+	{
+		return BalanceTypeCategory::find()->select(['name', 'id'])->indexBy('id')->column();
+	}
+	
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['is_det', 'order_code', 'name'], 'required'],
-            [['is_det', 'is_active'], 'integer'],
-            [['order_code', 'name'], 'string', 'max' => 45]
+            [['order_code', 'name', 'balance_type_category_id'], 'required'],
+            [['balance_type_category_id'], 'integer'],
+            [['order_code', 'name'], 'string', 'max' => 45],
         ];
     }
 
@@ -37,10 +43,9 @@ class BalanceType extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'is_det' => 'Is Det',
-            'is_active' => 'Is Active',
             'order_code' => 'Order Code',
             'name' => 'Name',
+			'balance_type_category_id' => 'Balance Type Category ID',
         ];
     }
 
@@ -51,4 +56,20 @@ class BalanceType extends \yii\db\ActiveRecord
     {
         return $this->hasMany(BalanceItemExt::className(), ['balance_type_id' => 'id']);
     }
+	
+	/**
+	 * @return \yii\db\ActiveQuery
+	 */
+	public function getBalanceTypeCategory()
+	{
+	   return $this->hasOne(BalanceTypeCategory::className(), ['id' => 'balance_type_category_id']);
+	}
+	
+	/**
+	 * @return \yii\db\ActiveQuery
+	 */
+	public function getRefBalanceItems()
+	{
+	   return $this->hasMany(RefBalanceItem::className(), ['balance_type_id' => 'id']);
+	}
 }

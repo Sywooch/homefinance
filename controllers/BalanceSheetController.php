@@ -34,7 +34,7 @@ class BalanceSheetController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => BalanceSheet::find()->orderBy('period_start'),
+            'query' => BalanceSheet::find()->orderBy('period_start DESC'),
         ]);
 
         return $this->render('index', [

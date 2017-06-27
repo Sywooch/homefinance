@@ -18,6 +18,10 @@ $this->params['breadcrumbs'][] = $this->title;
 	
     <p>
         <?= Html::a('New Month', ['balance-sheet/create-next'], ['class' => 'btn btn-success']) ?>
+		
+		<?= Html::a('Verify Change', ['balance-sheet/verify-change', 'id'=>$bSheets[0]->id], ['class' => 'btn btn-default']) ?>
+		
+		<?= Html::a('Upload Transactions', ['transaction/upload'], ['class' => 'btn btn-default']) ?>
     </p>
 
     <?= GridView::widget([
@@ -47,7 +51,6 @@ $this->params['breadcrumbs'][] = $this->title;
 			],
             [
 				'class' => 'yii\grid\ActionColumn',
-				//'template' => '{view}'.($model->immutable ? '' : {update} {delete}',
 				'visibleButtons' => [
 					'view'=>function ($model, $key, $index) {return true;},
 					'update'=>function ($model, $key, $index) {return !$model->immutable;},
@@ -64,7 +67,6 @@ $this->params['breadcrumbs'][] = $this->title;
 		<ul>
 		<li>Всего Активы: <?= $bSheets[0]->getTotal(1) ?></li>
 		<li>Всего Пассивы: <?= $bSheets[0]->getTotal(0) ?></li>
-		<li>Поправка на текущий остаток: <?= $bSheets[0]->getTotal(1) - $bSheets[0]->getTotal(0) ?></li>
 		</ul>
 	</p>
 </div>

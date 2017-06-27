@@ -15,6 +15,10 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'amount')->textInput(['maxlength' => true]) ?>
 	
     <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
+	
+    <?= $form->field($model, 'category')->textInput(['maxlength' => true]) ?>
+	
+    <?= $form->field($model, 'sub_category')->textInput(['maxlength' => true]) ?>
 
     <?
 	$src = \app\models\Account::find()->select('name, id')->orderBy('order_code')->indexBy('id')->column();

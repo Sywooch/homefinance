@@ -22,10 +22,9 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'is_det',
-            'is_active',
             'order_code',
             'name',
+			'balanceTypeCategory.name:Text:Category',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

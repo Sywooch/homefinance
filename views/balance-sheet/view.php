@@ -32,7 +32,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'period_start',
-            'is_month',
         ],
     ]) ?>
 

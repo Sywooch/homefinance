@@ -29,10 +29,9 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'is_det',
-            'is_active',
             'order_code',
             'name',
+			'balanceTypeCategory.name:Text:Category',
         ],
     ]) ?>
 

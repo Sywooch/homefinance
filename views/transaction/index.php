@@ -15,17 +15,30 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Create Transaction', ['create'], ['class' => 'btn btn-success']) ?>
+		
+		<?= Html::a('Upload Transactions', ['transaction/upload'], ['class' => 'btn btn-default']) ?>
     </p>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
             'id',
+            'date',
             'amount',
             'description',
+			'category',
+			'sub_category',
             'accountFrom.name:text:From Account',
             'accountTo.name:text:To Account',
-            'date',
+			'for_review:boolean',
+			[
+				'label'=>'For Review',
+				'format'=>'html',
+				'value'=>function ($item) {
+					if ($item->for_review) return Html::a(Html::tag('span', 'Yes', ['class'=>'glyphicon glyphicon-search']), ['review', 'id'=>$item->id]);
+					else return 'No';
+				},
+			],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

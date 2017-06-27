@@ -4,10 +4,12 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Transaction;
+use app\models\TransactionUploadForm;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * TransactionController implements the CRUD actions for Transaction model.
@@ -32,8 +34,10 @@ class TransactionController extends Controller
      */
     public function actionIndex()
     {
+		//TODO extract user_id
+		$user_id = 1;
         $dataProvider = new ActiveDataProvider([
-            'query' => Transaction::find(),
+            'query' => Transaction::find()->where(['user_id'=>$user_id])->orderBy('date DESC'),
         ]);
 
         return $this->render('index', [
@@ -85,6 +89,45 @@ class TransactionController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
+                'model' => $model,
+            ]);
+        }
+    }
+	
+    public function actionUpload()
+    {
+		$model = new TransactionUploadForm();
+		$model->loadValues();
+		
+        if ($model->load(Yii::$app->request->post())) {
+			$model->csv_file = UploadedFile::getInstances($model, 'csv_file');
+            if ($model->upload()) {
+                // file is uploaded successfully
+                return $this->redirect(['index']);
+            }
+        }
+		return $this->render('upload', [
+			'model' => $model,
+		]);
+    }
+	
+    public function actionReview($id)
+    {
+        $model = $this->findModel($id);
+		$model->description_trigger = $model->description;
+		$model->for_review = false;
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+			if ($_POST['action'] == 'Save and Apply') {
+				if ($rule = $model->createImportRule()) {
+					//apply created rule
+					$transactions = Transaction::findForReview();
+					foreach ($transactions as $tran) if ($tran->applyImportRule($rule)) $tran->save();
+				}
+			}
+            return $this->redirect(['index']);
+        } else {
+            return $this->render('review', [
                 'model' => $model,
             ]);
         }

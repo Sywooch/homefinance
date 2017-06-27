@@ -5,7 +5,7 @@ use yii\bootstrap\Modal;
 $value = $model->__get($attribute);
 if (!$value) $value = "not set";
 
-if ($amount) {
+if ($amount && !$model->immutable) {
 	Modal::begin([
 		'header' => $model->name.' '.$amount->balanceSheet->period_start,
 		'toggleButton' => ['tag'=>'a', 'label' => $value],

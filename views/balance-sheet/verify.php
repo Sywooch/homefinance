@@ -12,13 +12,22 @@ $this->params['breadcrumbs'][] = ['label' => 'Balance Sheets', 'url' => ['index'
 $this->params['breadcrumbs'][] = ['label' => $model->period_start, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="balance-item-index">
+<div class="balance-verify-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
+	
+	<style>
+		div.balance-verify-index tr[title=over] {
+			background-color:#FDD;
+		}
+	</style>
 
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+		'rowOptions'=>function ($item) {
+			return ['title'=>$item['threshold']];
+		},
         'columns' => [
 
             'order_code',
@@ -27,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'AmountNEW:decimal',
 			'Decrease:decimal',
 			'Increase:decimal',
-			'Balance:decimal',
+			'Result:decimal',
         ],
     ]); ?>
 

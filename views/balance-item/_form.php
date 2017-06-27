@@ -9,7 +9,7 @@ use yii\widgets\ActiveForm;
 ?>
 <div class="balance-item-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+	<?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 

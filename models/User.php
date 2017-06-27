@@ -11,6 +11,9 @@ use Yii;
  *
  * @property BalanceItem[] $balanceItems
  * @property BalanceSheet[] $balanceSheets
+ * @property ImportSettings[] $importSettings
+ * @property Transaction[] $transactions
+ * @property UserSettings[] $userSettings
  */
 class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
@@ -155,4 +158,28 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         return $this->hasMany(BalanceSheet::className(), ['user_id' => 'id']);
     }
+
+	/** 
+	 * @return \yii\db\ActiveQuery 
+	 */ 
+	public function getImportSettings() 
+	{ 
+	   return $this->hasMany(ImportSettings::className(), ['user_id' => 'id']); 
+	} 
+
+	/** 
+	 * @return \yii\db\ActiveQuery 
+	 */ 
+	public function getTransactions() 
+	{ 
+	   return $this->hasMany(Transaction::className(), ['user_id' => 'id']); 
+	} 
+
+	/** 
+	 * @return \yii\db\ActiveQuery 
+	 */ 
+	public function getUserSettings() 
+	{ 
+	   return $this->hasMany(UserSettings::className(), ['user_id' => 'id']); 
+	} 
 }

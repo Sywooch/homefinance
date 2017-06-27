@@ -23,7 +23,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'period_start',
-            'is_month',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

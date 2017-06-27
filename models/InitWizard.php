@@ -54,7 +54,7 @@ class InitWizard extends BasicProcess
 			'code'=>'init5',
 			'title'=>'Вклады',
 			'stage'=>'Активы - Среднеликвидные',
-			'type_id'=>'2',
+			'type_id'=>'1',
 			'message'=>'Вклады - это первый шаг к инвестированию. С одной стороны они требуют более высокого уровня планирования своих финансовых потоков, т.к. по сути замораживают часть средств, но с другой стороны, обеспечивают более высокую доходность, чем карточные или накопительные счета. Это дает шанс хотя бы сравняться с инфляцией.',
 			'buttons'=>'yesno',
 		],
@@ -62,7 +62,7 @@ class InitWizard extends BasicProcess
 			'code'=>'init6',
 			'title'=>'Другие инвестиции',
 			'stage'=>'Активы - Среднеликвидные',
-			'type_id'=>'2',
+			'type_id'=>'1',
 			'message'=>'Вы можете применять любые инвестиционные инструменты и детализировать счета так, как вам удобно. Можете отдельно завести акции, облигации, структурные продукты или форекс, если занимаетесь всеми этими инструментами. А можете сгруппировать их все в один счет для простоты.',
 			'buttons'=>'yesno',
 		],
@@ -70,7 +70,7 @@ class InitWizard extends BasicProcess
 			'code'=>'init7',
 			'title'=>'Имущество',
 			'stage'=>'Активы - Низколиквидные',
-			'type_id'=>'3',
+			'type_id'=>'1',
 			'message'=>'Низколиквидные активы - это имущество, например, машина или квартира. Строго говоря, если имущество куплено не в кредит, то лучше его выводить за рамки учета (бухгалтерский термин - <strong>забалансовые активы</strong>), если только они не были куплены с целью перепродажи.',
 			'buttons'=>'yesno',
 		],
@@ -86,23 +86,23 @@ class InitWizard extends BasicProcess
 			'code'=>'init8',
 			'title'=>'Текущий остаток',
 			'stage'=>'Пассивы - Свои средства',
-			'type_id'=>'4',
+			'type_id'=>'',
 			'message'=>'Текущий остаток - это счет, относящийся к капиталу, который по сути является балансиром между активами и пассивами, показывающим, хватает ли вам пассивов, чтобы обеспечить все активы. Поэтому этот счет является обязательным и служит базовым показателем качественного управления своими деньгами.<br/>На картинке проиллюстрировано, как меняется значение текущего остатка при изменении цен на активы и пассивы.<br/>Ближайшим аналогом этого счета в теории бухучета является <strong>счет №84 бухгалтерского плана “Нераспределенная прибыль (непокрытый убыток)”</strong>.',
 			'buttons'=>'submit',
 		],
 		[
 			'code'=>'init9',
-			'title'=>'Капитал',
+			'title'=>'Замороженные средства',
 			'stage'=>'Пассивы - Свои средства',
-			'type_id'=>'11',
-			'message'=>'Базовый капитал - это "замороженные" деньги, как правило, вложенные в текущее имущество, например, машину или квартиру, в которой вы живете. Учет таких денег оправдан только если они участвуют в каких-то операциях, например, куплены в кредит, для отражения того, какая часть имущества уже реально принадлежит вам (выкуплена), а какая все еще является обязательствами. По кредитам вы найдете советы и помощь в процессе дальнейшей работы с инструментом. Этот счет является обязательным.<br/>Ближайшим аналогом этого счета, хоть и весьма отдаленным, является <strong>счет №80 “Уставный капитал”</strong>.',
-			'buttons'=>'submit',
+			'type_id'=>'5',
+			'message'=>'Базовый капитал или "замороженные" деньги - это, как правило, вложения в текущее имущество, например, машину или квартиру, в которой вы живете. Учет таких денег оправдан только если они участвуют в каких-то операциях, например, куплены в кредит, для отражения того, какая часть имущества уже реально принадлежит вам (выкуплена), а какая все еще является обязательствами. По кредитам вы найдете советы и помощь в процессе дальнейшей работы с инструментом.<br/>Ближайшим аналогом этого счета, хоть и весьма отдаленным, является <strong>счет №80 “Уставный капитал”</strong>.',
+			'buttons'=>'yesno',
 		],
 		[
 			'code'=>'init10',
 			'title'=>'Отпуск',
 			'stage'=>'Пассивы - Резервы',
-			'type_id'=>'5',
+			'type_id'=>'3',
 			'message'=>'Всем нужно отдыхать, и на отдых часто нужны деньги. Источником денег для отпуска могут быть кредиты, но лучше формировать резеры. <strong>Резервы</strong> - это специальные счета, показывающие, что часть своих денег вы решили потратить на что-то конкретное, при этом не ограничивая текущее использование этих денег.<br/>Один из классических банковских продуктов - целевой накопительный счет - позиционируется для решения той же задачи, но он, являясь активом, подменяет собой понятие резерва (пассива), что приводит к невозможности использовать те же деньги более эффективно.',
 			'buttons'=>'yesno',
 		],
@@ -110,7 +110,7 @@ class InitWizard extends BasicProcess
 			'code'=>'init11',
 			'title'=>'Резервный фонд',
 			'stage'=>'Пассивы - Резервы',
-			'type_id'=>'6',
+			'type_id'=>'3',
 			'message'=>'Резервный фонд - это деньги, используемые строго в консервативных инструментах (с высокой надежностью и низким риском, например, банковские вклады). Основная задача - обеспечение сохранения уровня жизни в случае любых неудач по более рискованным инвестициям. Хорошим показателем будет иметь такой резерв в размере трехкратных месячных затрат.',
 			'buttons'=>'yesno',
 		],
@@ -118,7 +118,7 @@ class InitWizard extends BasicProcess
 			'code'=>'init12',
 			'title'=>'Долгосрочные цели',
 			'stage'=>'Пассивы - Резервы',
-			'type_id'=>'7',
+			'type_id'=>'3',
 			'message'=>'Долгосрочные резервы целиком и полностью зависят от ваших жизненных целей, например, накопить на покупку машины, квартиры, на ремонт, на обучение пятерых детей в Оксфорде и т.п. Вы можете детализировать эти резервы или использовать один общий счет.',
 			'buttons'=>'yesno',
 		],
@@ -126,7 +126,7 @@ class InitWizard extends BasicProcess
 			'code'=>'init13',
 			'title'=>'Кредитные карты',
 			'stage'=>'Пассивы - Краткосрочные обязательства',
-			'type_id'=>'8',
+			'type_id'=>'4',
 			'message'=>'Кредитные карты - это, как правило, самый дорогой из возможных источников средств. При правильном использовании, конечно, можно свести стоимость этих денег к нулю, если не вовремя гасить задолженность, но это не изменяет факта, что процентная ставка по картам одна из самых высоких.<br/>В рамках данного инструмента нет смысла учитывать каждую транзакцию по карте в отдельности, достаточно следить за задолженностью на конец месяца, если таковая имеется. Если у вас есть карта, но нет текущей задолженности по ней, то можете смело указывать 0 в поле ниже.',
 			'buttons'=>'yesno',
 		],
@@ -134,7 +134,7 @@ class InitWizard extends BasicProcess
 			'code'=>'init14',
 			'title'=>'Текущие кредиты',
 			'stage'=>'Пассивы - Среднесрочные обязательства',
-			'type_id'=>'9',
+			'type_id'=>'4',
 			'message'=>'Если у вас есть текущие кредиты кроме карт и ипотеки, например, кредит на ремонт или на машину, их можно учитывать здесь.',
 			'buttons'=>'yesno',
 		],
@@ -142,7 +142,7 @@ class InitWizard extends BasicProcess
 			'code'=>'init15',
 			'title'=>'Ипотечные кредиты',
 			'stage'=>'Пассивы - Долгосрочные обязательства',
-			'type_id'=>'10',
+			'type_id'=>'4',
 			'message'=>'Ипотека - это долгосрочный кредит, залогом в котором выступает недвижимость. Как правило, такой кредит берется как раз для покупки этой самой недвижимости.',
 			'buttons'=>'yesno',
 		],
@@ -158,13 +158,23 @@ class InitWizard extends BasicProcess
 		if (parent::performStep($step)) {
 			// ...custom code here...
 			if ($step->code == 'init1') {
-				//init two months on the first step
-				$model = new BalanceSheet();
-				$model->prepareNext();
-				if($model->save()) $model->initAmounts();
-				$model = new BalanceSheet();
-				$model->prepareNext();
-				if($model->save()) $model->initAmounts();
+				if (BalanceSheet::find()->count() == 0) {
+					//init two months on the first step
+					$model = new BalanceSheet();
+					$model->prepareNext();
+					if($model->save()) $model->initAmounts();
+					$model = new BalanceSheet();
+					$model->prepareNext();
+					if($model->save()) $model->initAmounts();
+				}
+				if (BalanceItem::find()->count() == 0) {
+					$refs = RefBalanceItem::find()->where(['is_autogenerated'=>true])->all();
+					foreach ($refs as $refItem) {
+						$model = new BalanceItem();
+						$model->prepareNew($refItem);
+						$this->saveBalanceItem($step, $model);
+					}
+				}
 			}
 			return $this->createBalanceItem($step);
 		} else {
@@ -179,31 +189,35 @@ class InitWizard extends BasicProcess
 			$model = new BalanceItem();
 			$model->prepareNew();
 			$model->name = $step->title;
-			$model->immutable = $step->buttons != 'yesno' ? 1 : 0;
 			$model->balance_type_id = $step->type_id;
-			// save balance item
-			if ($model->save()) {
-				// create accounts and amounts (balance sheets already exist)
-				$result = $model->initAccounts();
-				if ($result) {
-					// if accounts were not created
-					$step->error = Json::encode($result);
-					return false;
-				} else {
-					// if success, fill in the amount
-					$model->accounts[0]->balanceAmounts[1]->amount = 0 + $_POST['init_value'];
-					// save amount
-					if(!$model->accounts[0]->balanceAmounts[1]->save()) {
-						// if failed
-						$step->error = Json::encode($model->accounts[0]->balanceAmounts[1]->errors);
-						return false;
-					}
-				}
-			} else {
-				// if balance item was not saved
-				$step->error = Json::encode($model->errors);
+			return $this->saveBalanceItem($step, $model);
+		}
+		return true;
+	}
+	
+	private function saveBalanceItem($step, $model) {
+		// save balance item
+		if ($model->save()) {
+			// create accounts and amounts (balance sheets already exist)
+			$result = $model->initAccounts();
+			if ($result) {
+				// if accounts were not created
+				$step->error = Json::encode($result);
 				return false;
+			} else {
+				// if success, fill in the amount
+				$model->accounts[0]->balanceAmounts[1]->amount = 0 + $_POST['init_value'];
+				// save amount
+				if(!$model->accounts[0]->balanceAmounts[1]->save()) {
+					// if failed
+					$step->error = Json::encode($model->accounts[0]->balanceAmounts[1]->errors);
+					return false;
+				}
 			}
+		} else {
+			// if balance item was not saved
+			$step->error = Json::encode($model->errors);
+			return false;
 		}
 		return true;
 	}

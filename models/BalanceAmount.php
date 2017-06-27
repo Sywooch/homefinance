@@ -33,8 +33,31 @@ class BalanceAmount extends \yii\db\ActiveRecord
 	{  
 		$this->balance_sheet_id = $balance_sheet_id;  
 		return true;  
-	} 
+	}
+	
+	public function AfterSave() {
+		$this->recalcCurrentAmount();
+	}
 
+	private function recalcCurrentAmount()
+	{
+		//get item with specific ref id
+		$currentAmount = $this->balanceSheet->getBalanceAmounts()->
+			//joinWith('account')->
+			leftJoin('balance_item', 'balance_item.id = account.balance_item_id')->
+			where(['balance_item.ref_balance_item_id'=>1])->one();
+		if (!$currentAmount) {
+			Yii::warning("Current Amount not found");
+			return;
+		}
+		if ($currentAmount->id == $this->id) return;
+		//count diff assets-liabilities+current for selected balance sheet
+		$newAmount = $this->balanceSheet->getTotal(true) - $this->balanceSheet->getTotal(false) + $currentAmount->amount;
+		//set current value to that diff for selected balance sheet
+		$currentAmount->amount = $newAmount;
+		$currentAmount->save();
+	}
+	
     /**
      * @inheritdoc
      */
