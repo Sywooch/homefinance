@@ -17,6 +17,7 @@ use Yii;
 class BalanceSheet extends \yii\db\ActiveRecord
 {
 	private $_threshold;
+	private static $cathedLastSheets;
 	
 	public function getThreshold() {
 		if (!($this->_threshold > "")) {
@@ -34,8 +35,15 @@ class BalanceSheet extends \yii\db\ActiveRecord
 	
 	public static function LastTwo()
 	{
-		$balanceSheets = BalanceSheet::find()->select('id, period_start')->orderBy('period_start DESC')->limit(2)->all();
-		while (count($balanceSheets) < 2) $balanceSheets[] = BalanceSheet::NotSet();
+		return static::LastN(2);
+	}
+	
+	public static function LastN($count)
+	{
+		if (static::$cathedLastSheets && isset(static::$cathedLastSheets[$count])) return static::$cathedLastSheets[$count];
+		$balanceSheets = BalanceSheet::find()->select('id, period_start')->orderBy('period_start DESC')->limit($count)->all();
+		while (count($balanceSheets) < $count) $balanceSheets[] = BalanceSheet::NotSet();
+		static::$cathedLastSheets[$count] = $balanceSheets;
 		return $balanceSheets;
 	}
 	

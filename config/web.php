@@ -12,7 +12,17 @@ $config = [
         ],
     ],
     'components' => [
-        'request' => [
+        'authClientCollection' => [
+			'class' => 'yii\authclient\Collection',
+			'clients' => [
+				'google' => [
+					'class' => 'yii\authclient\clients\Google',
+					'clientId' => 'tbd',
+					'clientSecret' => 'tbd'
+				],
+			],
+		],
+		'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'homefin',
         ],

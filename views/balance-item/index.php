@@ -29,10 +29,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
 
             'order_code',
-            'balanceType.name:text:Type',
+			[
+				'attribute'=>'balance_type_id',
+				'value'=>'balanceType.name'
+			],
             'name',
 			[
-				'label'=>'Current Amount by '.$bSheets[0]->period_start,
+				'label'=>$bSheets[0]->period_start,
 				'content'=>function ($model, $key, $index, $column) {
 					return AccountValue::widget([
 						'model'=>$model,
@@ -41,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				}
 			],
 			[
-				'label'=>'Previous Amount by '.$bSheets[1]->period_start,
+				'label'=>$bSheets[1]->period_start,
 				'content'=>function ($model, $key, $index, $column) {
 					return AccountValue::widget([
 						'model'=>$model,

@@ -8,11 +8,6 @@ form div.required label.control-label:after {
   color:red;
 }
 
-.container {
-	margin:0%;
-	width:100%;
-}
-
 .wrap {
     min-height: 100%;
     height: auto;

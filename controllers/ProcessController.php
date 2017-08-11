@@ -5,9 +5,29 @@ namespace app\controllers;
 use yii\web\Controller;
 use app\models\BasicProcess;
 use app\models\InitWizard;
+use yii\filters\AccessControl;
 
 class ProcessController extends Controller
 {
+    public function behaviors()
+    {
+        return [
+			'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => false,
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+        ];
+    }
+	
     public function actionPerform($process_code, $step_code)
     {
 		$model = $this->findModel($process_code);

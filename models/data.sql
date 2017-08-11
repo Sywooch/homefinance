@@ -53,7 +53,12 @@ DROP TABLE IF EXISTS `homefin`.`user` ;
 
 CREATE TABLE IF NOT EXISTS `homefin`.`user` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `login` VARCHAR(255) NOT NULL,
+  `auth_id` VARCHAR(64) NULL,
+  `username` VARCHAR(256) NOT NULL,
+  `password` VARCHAR(256) NULL,
+  `email` VARCHAR(256) NULL,
+  `auth_key` VARCHAR(256) NULL,
+  `auth_token` VARCHAR(256) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -338,7 +343,7 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `homefin`;
-INSERT INTO `homefin`.`user` (`id`, `login`) VALUES (1, 'admin');
+INSERT INTO `homefin`.`user` (`id`, `auth_id`, `username`, `password`, `email`, `auth_key`, `auth_token`) VALUES (1, NULL, 'admin', NULL, NULL, NULL, NULL);
 
 COMMIT;
 

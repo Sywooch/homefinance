@@ -47,13 +47,13 @@ AppAsset::register($this);
 			['label' => 'Unit Tests', 
 				'items' => [
 					['label' => 'Accounts', 'url' => ['/account/index']],
-					['label' => 'Users', 'url' => ['/user/index']],
 					['label' => 'User Settings', 'url' => ['/user-settings/index']],
 					['label' => 'Import Settings', 'url' => ['/import-settings/index']],
 				]
 			],
 			['label' => 'Admin', 
 				'items' => [
+					['label' => 'Users', 'url' => ['/user/index']],
 					['label' => 'Ref Balance Items', 'url' => ['/ref-balance-item/index']],
 					['label' => 'Knowledge Articles', 'url' => ['/knowledge-article/index']],
 					['label' => 'Balance Types', 'url' => ['/balance-type/index']],

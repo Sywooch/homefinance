@@ -10,6 +10,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 use yii\helpers\Json;
 
 /**
@@ -20,6 +21,19 @@ class BalanceItemController extends Controller
     public function behaviors()
     {
         return [
+			'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => false,
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -36,7 +50,7 @@ class BalanceItemController extends Controller
     public function actionIndex()
     {		
         $dataProvider = new ActiveDataProvider([
-            'query' => BalanceItemExt::find()->orderBy('order_code'),
+            'query' => BalanceItemExt::find()->where(['user_id' => Yii::$app->user->id])->orderBy('order_code'),
         ]);
 
         return $this->render('index', [

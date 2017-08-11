@@ -17,6 +17,14 @@ use Yii;
  */
 class BalanceAmount extends \yii\db\ActiveRecord
 {
+	public function afterFind()
+    {
+        parent::afterFind();
+		if (Yii::$app->user->id != $this->balanceSheet->user_id) {
+			throw new \yii\web\ForbiddenHttpException('You are not allowed to access this item');
+		}
+    }
+	
     /**
      * @inheritdoc
      */

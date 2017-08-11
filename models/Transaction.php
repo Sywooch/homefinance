@@ -31,6 +31,14 @@ class Transaction extends \yii\db\ActiveRecord
 		return $this->amount . ' from '.$this->date;
 	}
 	
+	public function afterFind()
+    {
+        parent::afterFind();
+		if (Yii::$app->user->id != $this->user_id) {
+			throw new \yii\web\ForbiddenHttpException('You are not allowed to access this item');
+		}
+    }
+	
 	public function createImportRule() {
 		$model = new ImportSettings();
 		$this->description_trigger = trim($this->description_trigger);
