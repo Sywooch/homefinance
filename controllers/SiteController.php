@@ -74,7 +74,6 @@ class SiteController extends Controller
                         'username' => $nickname,
                         'email' => $email,
                         //'password_hash' => $password,
-						'status'=>0,
                     ]);
 
                     if ($user->save()) {

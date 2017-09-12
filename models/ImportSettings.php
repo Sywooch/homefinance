@@ -49,7 +49,7 @@ class ImportSettings extends \yii\db\ActiveRecord
             'name' => 'Name',
 			'code' => 'Code',
             'payload' => 'Payload',
-            'user_id' => 'User ID',
+            'user_id' => 'User',
         ];
     }
 

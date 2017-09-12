@@ -22,6 +22,14 @@ use Yii;
  */
 class BalanceItem extends \yii\db\ActiveRecord
 {
+	public function afterFind()
+    {
+        parent::afterFind();
+		if (Yii::$app->user->id != $this->user_id) {
+			throw new \yii\web\ForbiddenHttpException('You are not allowed to access this item');
+		}
+    }
+	
 	public function getImmutable()
 	{
 		if ($this->refBalanceItem) {
@@ -32,7 +40,7 @@ class BalanceItem extends \yii\db\ActiveRecord
 	
 	public function prepareNew($refItem = null)
 	{
-		$this->user_id = 1;
+		$this->user_id = Yii::$app->user->id;
 		if ($refItem) {
 			$this->ref_balance_item_id = $refItem->id;
 			$this->name = $refItem->name;
@@ -49,7 +57,7 @@ class BalanceItem extends \yii\db\ActiveRecord
 		$errors = [];
 		if ($account->save()) {
 			//for all existed balance items create amount for default account
-			$bSheets = BalanceSheet::find()->all();
+			$bSheets = BalanceSheet::find()->where(['user_id'=>$this->user_id])->all();
 			$success = true;
 			foreach ($bSheets as $sheet) {
 				if (isset($sheet->id)) {
@@ -87,7 +95,12 @@ class BalanceItem extends \yii\db\ActiveRecord
 	{
 		if (parent::beforeValidate()) {
 			// ...custom code here...
-			if ($this->order_num == null) $this->order_num = BalanceItem::find()->where(['balance_type_id'=>$this->balance_type_id])->max('order_num') + 1;
+			if ($this->order_num == null) {
+				$this->order_num = BalanceItem::find()->where([
+					'balance_type_id'=>$this->balance_type_id,
+					'user_id'=>$this->user_id,
+				])->max('order_num') + 1;
+			}
 			$this->order_code = $this->balanceType->order_code . $this->order_num;
 			return true;
 		} else {
@@ -126,6 +139,11 @@ class BalanceItem extends \yii\db\ActiveRecord
     {
         return $this->hasOne(BalanceType::className(), ['id' => 'balance_type_id']);
     }
+	
+	public function getBalanceTypeDict()
+	{
+		return BalanceType::find()->select(['name', 'id'])->orderBy('order_code')->indexBy('id')->column();
+	}
 	
     /** 
      * @return \yii\db\ActiveQuery 

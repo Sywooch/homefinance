@@ -43,7 +43,7 @@ class BalanceAmount extends \yii\db\ActiveRecord
 		return true;  
 	}
 	
-	public function AfterSave() {
+	public function afterSave($insert, $changed) {
 		$this->recalcCurrentAmount();
 	}
 

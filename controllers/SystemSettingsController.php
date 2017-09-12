@@ -25,12 +25,11 @@ class SystemSettingsController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'allow' => false,
-                        'roles' => ['?'],
-                    ],
-                    [
                         'allow' => true,
-                        'roles' => ['@'],
+						'roles' => ['@'],
+						'matchCallback'=>function ($rule, $action) {
+							return Yii::$app->user->identity->isAdmin;
+						}
                     ],
                 ],
             ],

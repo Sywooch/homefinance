@@ -3,6 +3,8 @@
 $params = require(__DIR__ . '/params.php');
 
 $config = [
+	'sourceLanguage' => 'en-US',
+	'language' => 'ru-RU',
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
@@ -12,7 +14,20 @@ $config = [
         ],
     ],
     'components' => [
-        'authClientCollection' => [
+        'i18n' => [
+			'translations' => [
+				'app*' => [
+					'class' => 'yii\i18n\PhpMessageSource',
+					//'basePath' => '@app/messages',
+					'fileMap' => [
+						'app' => 'app.php',
+						'app/error' => 'error.php',
+					],
+					'on missingTranslation' => ['app\components\TranslationEventHandler', 'handleMissingTranslation'],
+				],
+			],
+		],
+		'authClientCollection' => [
 			'class' => 'yii\authclient\Collection',
 			'clients' => [
 				'google' => [

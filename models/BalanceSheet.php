@@ -16,6 +16,14 @@ use Yii;
  */
 class BalanceSheet extends \yii\db\ActiveRecord
 {
+	public function afterFind()
+    {
+        parent::afterFind();
+		if (Yii::$app->user->id != $this->user_id) {
+			throw new \yii\web\ForbiddenHttpException('You are not allowed to access this item');
+		}
+    }
+	
 	private $_threshold;
 	private static $cathedLastSheets;
 	
@@ -40,8 +48,14 @@ class BalanceSheet extends \yii\db\ActiveRecord
 	
 	public static function LastN($count)
 	{
-		if (static::$cathedLastSheets && isset(static::$cathedLastSheets[$count])) return static::$cathedLastSheets[$count];
-		$balanceSheets = BalanceSheet::find()->select('id, period_start')->orderBy('period_start DESC')->limit($count)->all();
+		if (isset(static::$cathedLastSheets) && 
+			isset(static::$cathedLastSheets[$count]) && 
+			static::$cathedLastSheets[$count][0]->user_id == Yii::$app->user->id)
+			return static::$cathedLastSheets[$count];
+		$balanceSheets = BalanceSheet::find()->
+			where(['user_id'=>Yii::$app->user->id])->
+			orderBy('period_start DESC')->
+			limit($count)->all();
 		while (count($balanceSheets) < $count) $balanceSheets[] = BalanceSheet::NotSet();
 		static::$cathedLastSheets[$count] = $balanceSheets;
 		return $balanceSheets;
@@ -93,7 +107,7 @@ class BalanceSheet extends \yii\db\ActiveRecord
 	*/
 	public function initAmounts()
 	{
-		$accounts = Account::find()->orderBy('order_code')->all();
+		$accounts = Account::find()->joinWith('balanceItem')->where(['user_id'=>$this->user_id])->orderBy('order_code')->all();
 		$prevBalance = $this->getPreviouBalance();
 		for ($i = 0; $i < count($accounts); $i++) {
 			$amount = new BalanceAmount();
@@ -108,6 +122,7 @@ class BalanceSheet extends \yii\db\ActiveRecord
 	{
 		return BalanceSheet::find()
 			->where(['<','period_start',$this->period_start])
+			->andWhere(['user_id'=>$this->user_id])
 			->orderBy('period_start DESC')
 			->limit(1)
 			->one();
@@ -115,8 +130,8 @@ class BalanceSheet extends \yii\db\ActiveRecord
 	
 	public function prepareNext()
 	{
-		$this->user_id = 1;
-		$last = BalanceSheet::find()->orderBy('period_start DESC')->limit(1)->one();
+		$this->user_id = Yii::$app->user->id;
+		$last = BalanceSheet::find()->where(['user_id'=>$this->user_id])->orderBy('period_start DESC')->limit(1)->one();
 		if ($last) {
 			$this->period_start = date("Y-m-d", strtotime("+1 month", strtotime($last->period_start)));
 		} else {

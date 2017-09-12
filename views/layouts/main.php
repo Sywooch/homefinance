@@ -18,8 +18,8 @@ AppAsset::register($this);
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<?php
-		$this->registerCssFile("//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css");
-		$this->registerJsFile('//code.jquery.com/ui/1.11.4/jquery-ui.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
+		//$this->registerCssFile("//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css");
+		//$this->registerJsFile('//code.jquery.com/ui/1.11.4/jquery-ui.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
 	?>
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
@@ -37,6 +37,7 @@ AppAsset::register($this);
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
+	$user = Yii::$app->user;
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
@@ -45,6 +46,7 @@ AppAsset::register($this);
 			['label' => 'Status History', 'url' => ['/balance-sheet/index']],
 			['label' => 'Transactions', 'url' => ['/transaction/index']],
 			['label' => 'Unit Tests', 
+				'visible' => !$user->isGuest && $user->identity->isAdmin,
 				'items' => [
 					['label' => 'Accounts', 'url' => ['/account/index']],
 					['label' => 'User Settings', 'url' => ['/user-settings/index']],
@@ -52,6 +54,7 @@ AppAsset::register($this);
 				]
 			],
 			['label' => 'Admin', 
+				'visible' => !$user->isGuest && $user->identity->isAdmin,
 				'items' => [
 					['label' => 'Users', 'url' => ['/user/index']],
 					['label' => 'Ref Balance Items', 'url' => ['/ref-balance-item/index']],
@@ -61,13 +64,19 @@ AppAsset::register($this);
 					['label' => 'System Settings', 'url' => ['/system-settings/index']],
 				]
 			],
-            Yii::$app->user->isGuest ?
-                ['label' => 'Login', 'url' => ['/site/login']] :
-                [
-                    'label' => 'Logout (' . Yii::$app->user->identity->username . ')',
-                    'url' => ['/site/logout'],
-                    'linkOptions' => ['data-method' => 'post']
-                ],
+			['label' => 'Login', 'url' => ['/site/login'], 'visible' => $user->isGuest],
+			['label' => !$user->isGuest ? $user->identity->username : '', 
+				'visible' => !$user->isGuest,
+				'items' => [
+					['label'=>'My Profile', 'url'=>['/user/view-profile']],
+					[
+						'visible' => !$user->isGuest,
+						'label' => 'Logout',
+						'url' => ['/site/logout'],
+						'linkOptions' => ['data-method' => 'post']
+					],
+				]
+			],
         ],
     ]);
     NavBar::end();

@@ -23,10 +23,6 @@ class BalanceSheetController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'allow' => false,
-                        'roles' => ['?'],
-                    ],
-                    [
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -48,7 +44,7 @@ class BalanceSheetController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => BalanceSheet::find()->orderBy('period_start DESC'),
+            'query' => BalanceSheet::find()->where(['user_id' => Yii::$app->user->id])->orderBy('period_start DESC'),
         ]);
 
         return $this->render('index', [
@@ -84,7 +80,6 @@ class BalanceSheetController extends Controller
     public function actionCreate()
     {
         $model = new BalanceSheet();
-		$model->is_month = true;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);

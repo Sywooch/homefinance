@@ -23,15 +23,20 @@ class UserController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
+						'roles' => ['?'],
 						'actions' => ['create'],
                     ],
                     [
-                        'allow' => false,
-                        'roles' => ['?'],
+                        'allow' => true,
+						'actions' => ['view-profile', 'update-profile'],
+						'roles' => ['@'],
                     ],
                     [
                         'allow' => true,
-                        'roles' => ['@'],
+						'roles' => ['@'],
+						'matchCallback'=>function ($rule, $action) {
+							return Yii::$app->user->identity->isAdmin;
+						}
                     ],
                 ],
             ],
@@ -68,7 +73,12 @@ class UserController extends Controller
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
+			'action' => $this->action->id,
         ]);
+    }
+    public function actionViewProfile()
+    {
+        return $this->actionView(Yii::$app->user->id);
     }
 
     /**
@@ -98,14 +108,24 @@ class UserController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+		$action = $this->action->id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(
+			$action == 'update-profile' ?
+			['view-profile'] :
+			['view', 'id' => $model->id]
+			);
         } else {
             return $this->render('update', [
                 'model' => $model,
+				'action' => $action,
             ]);
         }
+    }
+    public function actionUpdateProfile()
+    {
+        return $this->actionUpdate(Yii::$app->user->id);
     }
 
     /**

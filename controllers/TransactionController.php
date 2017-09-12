@@ -24,10 +24,6 @@ class TransactionController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'allow' => false,
-                        'roles' => ['?'],
-                    ],
-                    [
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -48,8 +44,7 @@ class TransactionController extends Controller
      */
     public function actionIndex()
     {
-		//TODO extract user_id
-		$user_id = 1;
+		$user_id = Yii::$app->user->id;
         $dataProvider = new ActiveDataProvider([
             'query' => Transaction::find()->where(['user_id'=>$user_id])->orderBy('date DESC'),
         ]);

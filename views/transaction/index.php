@@ -28,11 +28,16 @@ $this->params['breadcrumbs'][] = $this->title;
             'description',
 			'category',
 			'sub_category',
-            'accountFrom.name:text:From Account',
-            'accountTo.name:text:To Account',
-			'for_review:boolean',
 			[
-				'label'=>'For Review',
+				'attribute'=>'account_from_id',
+				'value'=>'accountFrom.name',
+			],
+			[
+				'attribute'=>'account_to_id',
+				'value'=>'accountTo.name',
+			],
+			[
+				'attribute'=>'for_review',
 				'format'=>'html',
 				'value'=>function ($item) {
 					if ($item->for_review) return Html::a(Html::tag('span', 'Yes', ['class'=>'glyphicon glyphicon-search']), ['review', 'id'=>$item->id]);

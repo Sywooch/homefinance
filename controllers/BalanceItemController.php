@@ -25,10 +25,6 @@ class BalanceItemController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'allow' => false,
-                        'roles' => ['?'],
-                    ],
-                    [
                         'allow' => true,
                         'roles' => ['@'],
                     ],

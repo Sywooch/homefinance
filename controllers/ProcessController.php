@@ -16,7 +16,8 @@ class ProcessController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'allow' => false,
+                        'allow' => true,
+						'actions' => ['start'],
                         'roles' => ['?'],
                     ],
                     [

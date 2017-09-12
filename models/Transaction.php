@@ -69,8 +69,7 @@ class Transaction extends \yii\db\ActiveRecord
 	}
 	
 	public static function getAllImportRulesDecoded() {
-		//TODO fetch user_id
-		$user_id = 1;
+		$user_id = Yii::$app->user->id;
 		$rules = ImportSettings::find()->where(['user_id'=>$user_id, 'code'=>'parser'])->all();
 		for ($i = 0; $i < count($rules); $i++) {
 			$rules[$i]->payload = JSON::decode($rules[$i]->payload);
@@ -79,8 +78,7 @@ class Transaction extends \yii\db\ActiveRecord
 	}
 	
 	public static function findForReview() {
-		//TODO fetch user_id
-		$user_id = 1;
+		$user_id = Yii::$app->user->id;
 		return static::find()->where(['user_id'=>$user_id, 'for_review'=>true])->all();
 	}
 	
@@ -99,8 +97,7 @@ class Transaction extends \yii\db\ActiveRecord
     }
 	
 	public function BeforeValidate() {
-		//TODO setup user_id
-		if (!$this->user_id) $this->user_id = 1;
+		if (!$this->user_id) $this->user_id = Yii::$app->user->id;
 		return true;
 	}
 
@@ -116,11 +113,22 @@ class Transaction extends \yii\db\ActiveRecord
             'category' => 'Category',
 			'sub_category' => 'Sub Category',
             'date' => 'Date',
-            'account_from_id' => 'Account From ID',
-            'account_to_id' => 'Account To ID',
-			'user_id' => 'User ID', 
+            'account_from_id' => 'Account From',
+            'account_to_id' => 'Account To',
+			'user_id' => 'User', 
         ];
     }
+	
+	public function getAccountDict()
+	{
+		return Account::find()->
+			joinWith('balanceItem')->
+			where(['user_id'=>Yii::$app->user->id])->
+			select('account.name, account.id')->
+			orderBy('account.order_code')->
+			indexBy('id')->
+			column();
+	}
 
     /**
      * @return \yii\db\ActiveQuery

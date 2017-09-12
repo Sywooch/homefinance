@@ -21,7 +21,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'sub_category')->textInput(['maxlength' => true]) ?>
 
     <?
-	$src = \app\models\Account::find()->select('name, id')->orderBy('order_code')->indexBy('id')->column();
+	$src = $model->getAccountDict();
 	echo $form->field($model, 'account_from_id')->dropdownList($src, ['prompt'=>'- add -']);
 	echo $form->field($model, 'account_to_id')->dropdownList($src, ['prompt'=>'- remove -']);
 	?>

@@ -19,8 +19,7 @@ class TransactionUploadForm extends Model
 	public $csv_file;
 	
 	public function loadValues() {
-		//TODO fetch user_id
-		$user_id = 1;
+		$user_id = Yii::$app->user->id;
 		$model = ImportSettings::find()->where(['user_id'=>$user_id, 'code'=>'import'])->one();
 		if ($model) {
 			$this->setAttributes(JSON::decode($model->payload));
@@ -63,8 +62,7 @@ class TransactionUploadForm extends Model
     {
         if ($this->validate()) {
 			//save current settings
-			//TODO fetch user_id
-			$user_id = 1;
+			$user_id = Yii::$app->user->id;
 			$model = ImportSettings::find()->where(['user_id'=>$user_id, 'code'=>'import'])->one();
 			if ($model == null) {
 				$model = new ImportSettings();

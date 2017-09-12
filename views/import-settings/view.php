@@ -31,9 +31,16 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'name',
 			'code',
-            'payload',
-            'user_id',
+			[
+				'attribute'=>'user_id',
+				'value'=>$model->user->username
+			],
         ],
     ]) ?>
+	
+	<div class="panel panel-default">
+		<p class="panel-heading"><?= $model->attributeLabels()['payload'] ?></p>
+		<p class="panel-body" style="word-wrap: break-word;"><?= Html::encode($model->payload) ?></p>
+	</div>
 
 </div>
