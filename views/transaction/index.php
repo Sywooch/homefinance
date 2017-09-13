@@ -6,7 +6,7 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Transactions';
+$this->title = Yii::t('app', 'Transactions');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="transaction-index">
@@ -14,9 +14,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Transaction', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Create Transaction'), ['create'], ['class' => 'btn btn-success']) ?>
 		
-		<?= Html::a('Upload Transactions', ['transaction/upload'], ['class' => 'btn btn-default']) ?>
+		<?= Html::a(Yii::t('app', 'Upload Transactions'), ['transaction/upload'], ['class' => 'btn btn-default']) ?>
     </p>
 
     <?= GridView::widget([
@@ -40,8 +40,8 @@ $this->params['breadcrumbs'][] = $this->title;
 				'attribute'=>'for_review',
 				'format'=>'html',
 				'value'=>function ($item) {
-					if ($item->for_review) return Html::a(Html::tag('span', 'Yes', ['class'=>'glyphicon glyphicon-search']), ['review', 'id'=>$item->id]);
-					else return 'No';
+					if ($item->for_review) return Html::a(Html::tag('span', Yii::t('yii', 'Yes'), ['class'=>'glyphicon glyphicon-search']), ['review', 'id'=>$item->id]);
+					else return Yii::t('yii', 'No');
 				},
 			],
 

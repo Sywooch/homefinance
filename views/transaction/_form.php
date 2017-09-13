@@ -22,14 +22,14 @@ use yii\widgets\ActiveForm;
 
     <?
 	$src = $model->getAccountDict();
-	echo $form->field($model, 'account_from_id')->dropdownList($src, ['prompt'=>'- add -']);
-	echo $form->field($model, 'account_to_id')->dropdownList($src, ['prompt'=>'- remove -']);
+	echo $form->field($model, 'account_from_id')->dropdownList($src, ['prompt'=>Yii::t('app', '- add -')]);
+	echo $form->field($model, 'account_to_id')->dropdownList($src, ['prompt'=>Yii::t('app', '- remove -')]);
 	?>
 
     <?= $form->field($model, 'date')->textInput() ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('yii', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

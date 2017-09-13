@@ -7,10 +7,10 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Transaction */
 
-$this->title = 'Review Transaction: ' . ' ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Transactions', 'url' => ['index']];
+$this->title = Yii::t('app', 'Review Transaction') . ': ' . $model->name;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Transactions'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Review';
+$this->params['breadcrumbs'][] = Yii::t('app', 'Review');
 ?>
 <div class="transaction-review">
 
@@ -22,12 +22,12 @@ $this->params['breadcrumbs'][] = 'Review';
             'date',
 			'amount',
 			'description',
-            'accountFrom.name:text:From Account',
-            'accountTo.name:text:To Account',
+            'accountFrom.name:text:'.$model->attributeLabels()['account_from_id'],
+            'accountTo.name:text:'.$model->attributeLabels()['account_to_id'],
         ],
     ]) ?>
 	
-	<h2>Setup category</h2>
+	<h2><?= Yii::t('app', 'Setup category') ?></h2>
     
 	<div class="transaction-form">
 
@@ -40,9 +40,9 @@ $this->params['breadcrumbs'][] = 'Review';
 		<?= $form->field($model, 'sub_category')->textInput(['maxlength' => true]) ?>
 		
 		<div class="form-group">
-			<?= Html::submitButton('Save', ['class' => 'btn btn-primary', 'name'=>'action', 'value'=>'Save']) ?>
+			<?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-primary', 'name'=>'action', 'value'=>'Save']) ?>
 			
-			<?= Html::submitButton('Save and Apply', ['class' => 'btn btn-success', 'name'=>'action', 'value'=>'Save and Apply']) ?>
+			<?= Html::submitButton(Yii::t('app', 'Save and Apply'), ['class' => 'btn btn-success', 'name'=>'action', 'value'=>'Save and Apply']) ?>
 		</div>
 
 		<?php ActiveForm::end(); ?>

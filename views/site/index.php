@@ -3,15 +3,14 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 
-$this->title = 'Home Finance';
+$this->title = Yii::t('app', 'Home Finance');
 ?>
 <div class="site-index">
 
     <div class="jumbotron">
-        <h1>Сам себе финансист</h1>
+        <h1><?= $this->title ?></h1>
 		<p>
-			Управляй своими финансами, как профессиональный бухгалтер!
-			<?= \yii::t('app', 'test') ?>
+			<?= Yii::t('app', 'Manage your money professionally!') ?>
 		</p>
     </div>
 

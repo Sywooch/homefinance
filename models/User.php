@@ -89,8 +89,8 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return [
             'id' => 'ID',
             'auth_id' => 'Auth ID',
-            'username' => 'Username',
-            'password' => 'Password',
+            'username' => Yii::t('app', 'Username'),
+            'password' => Yii::t('app', 'Password'),
             'email' => 'Email',
             'auth_key' => 'Auth Key',
             'auth_token' => 'Auth Token',

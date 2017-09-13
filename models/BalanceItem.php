@@ -116,11 +116,11 @@ class BalanceItem extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'order_num' => 'Order Num',
-            'order_code' => 'Order Code',
-            'name' => 'Name',
-            'balance_type_id' => 'Balance Type',
-            'user_id' => 'User ID',
-            'ref_balance_item_id' => 'Ref Balance Item ID',
+            'order_code' => Yii::t('app', 'Order Code'),
+            'name' => Yii::t('app', 'Name'),
+            'balance_type_id' => Yii::t('app', 'Balance Type'),
+            'user_id' => Yii::t('app', 'User'),
+            'ref_balance_item_id' => 'Ref Balance Item',
         ];
     }
 	

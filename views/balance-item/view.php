@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model app\models\BalanceItem */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Balance Items', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Current Balance'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="balance-item-view">
@@ -16,11 +16,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
 		<? if (!$model->immutable) { ?>
-			<?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-			<?= Html::a('Delete', ['delete', 'id' => $model->id], [
+			<?= Html::a(Yii::t('yii', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+			<?= Html::a(Yii::t('yii', 'Delete'), ['delete', 'id' => $model->id], [
 				'class' => 'btn btn-danger',
 				'data' => [
-					'confirm' => 'Are you sure you want to delete this item?',
+					'confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
 					'method' => 'post',
 				],
 			]) ?>
@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'order_code',
             'name',
-			'balanceType.name:text:Type',
+			'balanceType.name:text:'.$model->attributeLabels()['balance_type_id'],
         ],
     ]) ?>
 

@@ -19,11 +19,15 @@ use yii\helpers\ArrayHelper;
  */
 class BalanceType extends \yii\db\ActiveRecord
 {
-	public function getAvailableCategories()
-	{
-		return BalanceTypeCategory::find()->select(['name', 'id'])->indexBy('id')->column();
+	public function isAssets() {
+		return $this->balance_type_category_id == 1;
 	}
-	
+	public function isLiabilities() {
+		return $this->balance_type_category_id == 2;
+	}
+	public function isOuterAssets() {
+		return $this->balance_type_category_id == 3;
+	}
     /**
      * @inheritdoc
      */
@@ -63,6 +67,10 @@ class BalanceType extends \yii\db\ActiveRecord
 	public function getBalanceTypeCategory()
 	{
 	   return $this->hasOne(BalanceTypeCategory::className(), ['id' => 'balance_type_category_id']);
+	}
+	public function getBalanceTypeCategoryDict()
+	{
+		return BalanceTypeCategory::find()->select(['name', 'id'])->indexBy('id')->column();
 	}
 	
 	/**

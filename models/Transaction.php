@@ -28,7 +28,7 @@ class Transaction extends \yii\db\ActiveRecord
 	public $description_trigger;
 	
 	public function getName() {
-		return $this->amount . ' from '.$this->date;
+		return $this->amount . ' ' . Yii::t('app', 'from') . ' '.$this->date;
 	}
 	
 	public function afterFind()
@@ -108,14 +108,16 @@ class Transaction extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'amount' => 'Amount',
-            'description' => 'Description',
-            'category' => 'Category',
-			'sub_category' => 'Sub Category',
-            'date' => 'Date',
-            'account_from_id' => 'Account From',
-            'account_to_id' => 'Account To',
-			'user_id' => 'User', 
+            'amount' => Yii::t('app', 'Amount'),
+            'description' => Yii::t('app', 'Description'),
+            'category' => Yii::t('app', 'Category'),
+			'sub_category' => Yii::t('app', 'Sub Category'),
+            'date' => Yii::t('app', 'Date'),
+            'account_from_id' => Yii::t('app', 'Account From'),
+            'account_to_id' => Yii::t('app', 'Account To'),
+			'user_id' => Yii::t('app', 'User'), 
+			'for_review' => Yii::t('app', 'For Review'),
+			'description_trigger' => Yii::t('app', 'Description Trigger'),
         ];
     }
 	

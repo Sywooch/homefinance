@@ -12,5 +12,5 @@ $this->title = $model->title;
     <?= $model->description?>
 </p>
 <p>
-	<?= Html::a('Start', ['perform', 'process_code'=>$model->code, 'step_code'=>$model->steps[0]->code], ['class' => 'btn btn-success']) ?>
+	<?= Html::a(Yii::t('app', 'Start'), ['perform', 'process_code'=>$model->code, 'step_code'=>$model->steps[0]->code], ['class' => 'btn btn-success']) ?>
 </p>

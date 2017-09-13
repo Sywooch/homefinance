@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\BalanceItem */
 
-$this->title = 'Update Balance Item: ' . ' ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Balance Items', 'url' => ['index']];
+$this->title = Yii::t('yii', 'Update') . ' ' . Yii::t('app', 'Balance Item') . ': ' . $model->name;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Current Balance'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = Yii::t('yii', 'Update');
 ?>
 <div class="balance-item-update">
 

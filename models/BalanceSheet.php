@@ -61,12 +61,12 @@ class BalanceSheet extends \yii\db\ActiveRecord
 		return $balanceSheets;
 	}
 	
-	public function getTotal($is_active)
+	public function getTotal($balance_type_category_id)
 	{
 		return $this->getBalanceAmounts()
 		->join('INNER JOIN', 'balance_item', 'account.balance_item_id = balance_item.id')
 		->join('INNER JOIN', 'balance_type', 'balance_item.balance_type_id = balance_type.id')
-		->where(['balance_type.balance_type_category_id' => $is_active ? 1 : 2])
+		->where(['balance_type.balance_type_category_id' => $balance_type_category_id])
 		->sum('balance_amount.amount');
 	}
 
@@ -89,8 +89,8 @@ class BalanceSheet extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'period_start' => 'Period Start',
-            'user_id' => 'User ID',
+            'period_start' => Yii::t('app', 'Period Start'),
+            'user_id' => Yii::t('app', 'User'),
         ];
     }
 

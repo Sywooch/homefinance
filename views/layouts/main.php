@@ -31,7 +31,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'Home Finance',
+        'brandLabel' => Yii::t('app', 'Home Finance'),
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -41,10 +41,10 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-			['label' => 'Current Status', 'url' => ['/balance-item/index']],
-			['label' => 'Status History', 'url' => ['/balance-sheet/index']],
-			['label' => 'Transactions', 'url' => ['/transaction/index']],
+            ['label' => Yii::t('app', 'Home'), 'url' => ['/site/index']],
+			['label' => Yii::t('app', 'Current Balance'), 'url' => ['/balance-item/index']],
+			['label' => Yii::t('app', 'Balance History'), 'url' => ['/balance-sheet/index']],
+			['label' => Yii::t('app', 'Transactions'), 'url' => ['/transaction/index']],
 			['label' => 'Unit Tests', 
 				'visible' => !$user->isGuest && $user->identity->isAdmin,
 				'items' => [
@@ -64,14 +64,14 @@ AppAsset::register($this);
 					['label' => 'System Settings', 'url' => ['/system-settings/index']],
 				]
 			],
-			['label' => 'Login', 'url' => ['/site/login'], 'visible' => $user->isGuest],
+			['label' => Yii::t('app', 'Login'), 'url' => ['/site/login'], 'visible' => $user->isGuest],
 			['label' => !$user->isGuest ? $user->identity->username : '', 
 				'visible' => !$user->isGuest,
 				'items' => [
-					['label'=>'My Profile', 'url'=>['/user/view-profile']],
+					['label'=>Yii::t('app', 'My Profile'), 'url'=>['/user/view-profile']],
 					[
 						'visible' => !$user->isGuest,
-						'label' => 'Logout',
+						'label' => Yii::t('app', 'Logout'),
 						'url' => ['/site/logout'],
 						'linkOptions' => ['data-method' => 'post']
 					],
@@ -92,7 +92,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; Home Finance <?= date('Y') ?></p>
+        <p class="pull-left">&copy; <?= Yii::t('app', 'Home Finance') ?> <?= date('Y') ?></p>
 
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>

@@ -4,7 +4,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\BasicProcess */
 
-$this->title = 'Завершен '.$model->title;
+$this->title = Yii::t('app', 'Finished') .' '.$model->title;
 ?>
 <h1><?= $this->title ?></h1>
 

@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model app\models\User */
 
 $this->title = $model->username;
-$this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
+if ($action != 'view-profile') $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Users'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-view">
@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update',
+        <?= Html::a(Yii::t('yii', 'Update'),
 		$action == 'view-profile' ?
 		['update-profile'] :
 		['update', 'id' => $model->id],
@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= $action == 'view' ? Html::a('Delete', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
                 'method' => 'post',
             ],
         ]) : '' ?>
@@ -32,13 +32,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'auth_id',
             'username',
-            'password',
             'email:email',
-            'auth_key',
-            'auth_token',
         ],
     ]) ?>
 

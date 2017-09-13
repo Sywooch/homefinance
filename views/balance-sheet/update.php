@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\BalanceSheet */
 
-$this->title = 'Update Balance Sheet: ' . ' ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Balance Sheets', 'url' => ['index']];
+$this->title = Yii::t('yii', 'Update') . ' ' . Yii::t('app', 'Balance Sheet') . ': ' . $model->period_start;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Balance History'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->period_start, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = Yii::t('yii', 'Update');
 ?>
 <div class="balance-sheet-update">
 
