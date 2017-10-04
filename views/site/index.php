@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Html;
+use app\components\BalanceTotals;
 
 /* @var $this yii\web\View */
 
@@ -16,23 +17,23 @@ $this->title = Yii::t('app', 'Home Finance');
 
     <div class="body-content">
         <div class="row">
-            <div class="col-lg-4 text-center">
-                <h2>TBD</h2>
-
+            <div class="col-lg-6">
+                <h2><?= Yii::t('app', 'Totals') ?></h2>
+				
+				<?= BalanceTotals::widget() ?>
                 
             </div>
-            <div class="col-lg-4 text-center">
-				<h2>Processes</h2>
+            <div class="col-lg-6 text-right">
+				<h2><?= Yii::t('app', 'Wizards') ?></h2>
+				<p>	<?= Html::a(Yii::t('app', 'Init wizard'), 
+					['process/start', 'process_code'=>'init'], 
+					['class'=>'btn btn-success']) ?> </p>
 				<p>
-					<?= Html::a('Init', ['process/start', 'process_code'=>'init'], ['class'=>'btn btn-success']) ?>
-					<?= Html::a('Drop all data', ['site/drop', 'process_code'=>'init'], ['class'=>'btn btn-danger', 'data' => ['confirm' => 'Are you sure?'],]) ?>
+					<?= Html::a(Yii::t('app', 'Drop my data'), 
+					['site/drop', 'process_code'=>'init'], 
+					['class'=>'btn btn-danger', 
+					'data' => ['confirm' => Yii::t('yii', 'Are you sure you want to delete this item?')],]) ?>
 				</p>
-            </div>
-            <div class="col-lg-4 text-center">
-                <h2>TBD</h2>
-
-                <p></p>
-
             </div>
         </div>
 

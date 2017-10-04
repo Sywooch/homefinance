@@ -42,9 +42,9 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => Yii::t('app', 'Home'), 'url' => ['/site/index']],
-			['label' => Yii::t('app', 'Current Balance'), 'url' => ['/balance-item/index']],
-			['label' => Yii::t('app', 'Balance History'), 'url' => ['/balance-sheet/index']],
-			['label' => Yii::t('app', 'Transactions'), 'url' => ['/transaction/index']],
+			['label' => Yii::t('app', 'Current Balance'), 'url' => ['/balance-item/index'], 'visible' => !$user->isGuest,],
+			['label' => Yii::t('app', 'Balance History'), 'url' => ['/balance-sheet/index'], 'visible' => !$user->isGuest,],
+			['label' => Yii::t('app', 'Transactions'), 'url' => ['/transaction/index'], 'visible' => !$user->isGuest,],
 			['label' => 'Unit Tests', 
 				'visible' => !$user->isGuest && $user->identity->isAdmin,
 				'items' => [

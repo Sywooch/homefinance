@@ -206,7 +206,8 @@ class InitWizard extends BasicProcess
 				return false;
 			} else {
 				// if success, fill in the amount
-				$model->accounts[0]->balanceAmounts[1]->amount = 0 + $_POST['init_value'];
+				// supress notices for overloaded array - object references used and not set POST - rounded to zero
+				@$model->accounts[0]->balanceAmounts[1]->amount = 0 + $_POST['init_value'];
 				// save amount
 				if(!$model->accounts[0]->balanceAmounts[1]->save()) {
 					// if failed

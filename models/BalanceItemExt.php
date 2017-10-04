@@ -32,49 +32,43 @@ class BalanceItemExt extends BalanceItem
         return 'balance_item';
     }
 	
-	public function getaccounts_number()
+	public function getAmountByBSheet($bSheet_id)
 	{
-		return count($this->accounts);
+		if (isset($this->id)) {
+			// if specific Item - return sum for all accounts
+			return BalanceAmount::find()->
+				joinWith('account')->
+				where([
+					'balance_item_id'=>$this->id,
+					'balance_sheet_id'=>$bSheet_id,
+				])->sum('amount');
+		} else {
+			//else return sum for all items of the same type and for all accounts
+			return BalanceAmount::find()->
+				joinWith('account')->
+				joinWith('balanceItem')->
+				where([
+					'balance_type_id'=>$this->balance_type_id,
+					'balance_sheet_id'=>$bSheet_id,
+				])->sum('amount');
+		}
 	}
 	
-	private function LoadBalances()
+	public static function findTypesList()
 	{
-		if (!$this->balanceSheets)
-			$this->balanceSheets = BalanceSheet::LastTwo();
+		return BalanceItemExt::find()->
+			where(['user_id' => Yii::$app->user->id])->
+			groupBy('user_id, balance_type_id')->
+			select('user_id, balance_type_id')->
+			orderBy('order_code');
 	}
 	
-	public function getCurrentAmount()
+	public static function findByType($balance_type_id)
 	{
-		$this->LoadBalances();
-		if (count($this->balanceSheets) >= 1) return $this->getAmount($this->balanceSheets[0]->id);
-		else return null;
-	}
-	
-	public function getPreviousAmount()
-	{
-		$this->LoadBalances();
-		if (count($this->balanceSheets) >= 2) return $this->getAmount($this->balanceSheets[1]->id);
-		else return null;
-	}
-	
-	public function getAmount($sheet_id)
-	{
-		$id = $this->id;
-		$results = Yii::$app->db->createCommand("
-			SELECT SUM(amount)
-			FROM {{%balance_amount}} AS amt
-				INNER JOIN {{%account}} AS ac ON amt.account_id = ac.id
-			WHERE
-				ac.balance_item_id = :bi_id AND
-				amt.balance_sheet_id = :bs_id
-		")
-		->bindParam(':bi_id', $id)
-		->bindParam(':bs_id', $sheet_id)
-		->queryScalar();
-		return $results;
-	}
-	
-	public function showCreateLink($sheet) {
-		return yii\helpers\Html::a("create", array("balance-amount/create-master", "item_id"=>$this->id, 'sheet_id'=>$sheet->id));
+		return BalanceItemExt::find()->
+			where([
+				'user_id' => Yii::$app->user->id,
+				'balance_type_id' => $balance_type_id
+			])->orderBy('order_code');
 	}
 }

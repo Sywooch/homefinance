@@ -22,27 +22,7 @@ class Account extends \yii\db\ActiveRecord
 {	
 	private $balanceSheets;
 	
-	private function LoadBalances()
-	{
-		if (!$this->balanceSheets)
-			$this->balanceSheets = BalanceSheet::LastTwo();
-	}
-	
-	public function getCurrentAmount()
-	{
-		$this->LoadBalances();
-		if (isset($this->balanceSheets[0]->id)) return $this->getAmount($this->balanceSheets[0]->id);
-		else return null;
-	}
-	
-	public function getPreviousAmount()
-	{
-		$this->LoadBalances();
-		if (isset($this->balanceSheets[1]->id)) return $this->getAmount($this->balanceSheets[1]->id);
-		else return null;
-	}
-	
-	public function getAmount($sheet_id)
+	public function getAmountModel($sheet_id)
 	{
 		$amount = BalanceAmount::find()->where([
 			'account_id'=>$this->id,

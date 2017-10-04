@@ -22,5 +22,4 @@ return [
     'No' => '',
     'Update' => '',
     'Yes' => '',
-    'Update Transaction' => '@@@@',
 ];

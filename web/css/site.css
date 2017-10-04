@@ -1,6 +1,17 @@
 html,
 body {
     height: 100%;
+	font-family:Times New Roman;
+}
+
+.nav > li > a.btn-success {
+	color:#fff;
+}
+
+.nav > li > a.btn-success:hover {
+    color: #fff;
+    background-color: #449d44;
+    border-color: #398439;
 }
 
 form div.required label.control-label:after {

@@ -72,7 +72,7 @@ $config = [
             'dateFormat' => 'dd.MM.yyyy',
             'decimalSeparator' => ',',
             'thousandSeparator' => ' ',
-            'currencyCode' => 'р. ',
+            'currencyCode' => 'RUB',
        ],
     ],
     'params' => $params,

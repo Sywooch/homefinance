@@ -203,17 +203,17 @@ CREATE TABLE IF NOT EXISTS `homefin`.`transaction` (
   CONSTRAINT `fk_transaction_account1`
     FOREIGN KEY (`account_from_id`)
     REFERENCES `homefin`.`account` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_transaction_account2`
     FOREIGN KEY (`account_to_id`)
     REFERENCES `homefin`.`account` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_transaction_user1`
     FOREIGN KEY (`user_id`)
     REFERENCES `homefin`.`user` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -343,7 +343,7 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `homefin`;
-INSERT INTO `homefin`.`user` (`id`, `auth_id`, `username`, `password`, `email`, `auth_key`, `auth_token`) VALUES (1, NULL, 'admin', NULL, NULL, NULL, NULL);
+INSERT INTO `homefin`.`user` (`id`, `auth_id`, `username`, `password`, `email`, `auth_key`, `auth_token`) VALUES (1, NULL, 'admin', '$1$4175$ZEZh1cGO4IxtOEdt/kuXc/', NULL, NULL, NULL);
 
 COMMIT;
 

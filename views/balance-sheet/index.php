@@ -13,18 +13,21 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Create') . ' ' . Yii::t('app', 'Balance Sheet'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            ['class' => 'yii\grid\SerialColumn', 'contentOptions' => ['class' => 'col-lg-1'],],
 
             'period_start:date',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn',
+			'contentOptions' => ['class' => 'col-lg-1'],
+			'visibleButtons' => [
+					'view'=>function ($model, $key, $index) {return true;},
+					'update'=>function ($model, $key, $index) {return false;},
+					'delete'=>function ($model, $key, $index) {return true;},
+				],
+			],
         ],
     ]); ?>
 

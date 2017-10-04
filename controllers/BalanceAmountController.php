@@ -41,14 +41,11 @@ class BalanceAmountController extends Controller
      * Lists all BalanceAmount models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($bSheet_id)
     {
-		$session = Yii::$app->session;
-		$session->open();
         $dataProvider = new ActiveDataProvider([
             'query' => BalanceAmount::find()
-			->where(array('balance_sheet_id' => $session['balance_sheet_id']))
-			->join('LEFT OUTER JOIN', 'account', 'balance_item_id = account.id')
+			->where(['balance_sheet_id' => $bSheet_id])
 			->orderBy('account.order_code'),
         ]);
 
@@ -76,11 +73,9 @@ class BalanceAmountController extends Controller
      */
     public function actionCreate()
     {
-		$session = Yii::$app->session;
-		$session->open();
         $model = new BalanceAmount();
 
-        if ($model->load(Yii::$app->request->post()) && $model->RecalcValues($session['balance_sheet_id']) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [

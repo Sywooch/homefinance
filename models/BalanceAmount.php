@@ -37,12 +37,6 @@ class BalanceAmount extends \yii\db\ActiveRecord
         ];
     }
 	
-	public function RecalcValues($balance_sheet_id)  
-	{  
-		$this->balance_sheet_id = $balance_sheet_id;  
-		return true;  
-	}
-	
 	public function afterSave($insert, $changed) {
 		$this->recalcCurrentAmount();
 	}
@@ -60,7 +54,7 @@ class BalanceAmount extends \yii\db\ActiveRecord
 		}
 		if ($currentAmount->id == $this->id) return;
 		//count diff assets-liabilities+current for selected balance sheet
-		$newAmount = $this->balanceSheet->getTotal(true) - $this->balanceSheet->getTotal(false) + $currentAmount->amount;
+		$newAmount = $this->balanceSheet->getTotal(1) - $this->balanceSheet->getTotal(2) + $currentAmount->amount;
 		//set current value to that diff for selected balance sheet
 		$currentAmount->amount = $newAmount;
 		$currentAmount->save();
@@ -73,9 +67,9 @@ class BalanceAmount extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'amount' => 'Amount',
-            'balance_sheet_id' => 'Balance Sheet ID',
-            'account_id' => 'Account ID',
+            'amount' => Yii::t('app', 'Amount'),
+            'balance_sheet_id' => Yii::t('app', 'Balance Sheet'),
+            'account_id' => Yii::t('app', 'Account'),
         ];
     }
 
@@ -85,6 +79,14 @@ class BalanceAmount extends \yii\db\ActiveRecord
     public function getAccount()
     {
         return $this->hasOne(Account::className(), ['id' => 'account_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBalanceItem()
+    {
+        return $this->hasOne(BalanceItem::className(), ['id' => 'balance_item_id'])->via('account');
     }
 
     /**

@@ -103,7 +103,13 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+        if (Yii::$app->user->isGuest) {
+			$this->layout = 'landing';
+			return $this->render('landing-index');
+		} else if (Yii::$app->user->identity->getBalanceItems()->count() == 0) {
+			$this->layout = 'landing';
+			return $this->render('landing-index2');
+		} else return $this->render('index');
     }
 
     public function actionLogin()
@@ -148,9 +154,9 @@ class SiteController extends Controller
 	
 	public function actionDrop()
 	{
-		$list = \app\models\BalanceItem::find()->all();
+		$list = \app\models\BalanceItem::find()->where(['user_id'=>Yii::$app->user->identity->id])->all();
 		foreach ($list as $item) $item->delete();
-		$list = \app\models\BalanceSheet::find()->all();
+		$list = \app\models\BalanceSheet::find()->where(['user_id'=>Yii::$app->user->identity->id])->all();
 		foreach ($list as $item) $item->delete();
 		return $this->redirect(['index']);
 	}

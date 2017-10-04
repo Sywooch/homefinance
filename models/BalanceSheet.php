@@ -48,10 +48,12 @@ class BalanceSheet extends \yii\db\ActiveRecord
 	
 	public static function LastN($count)
 	{
+		//check cache
 		if (isset(static::$cathedLastSheets) && 
 			isset(static::$cathedLastSheets[$count]) && 
 			static::$cathedLastSheets[$count][0]->user_id == Yii::$app->user->id)
 			return static::$cathedLastSheets[$count];
+		//or prepare new
 		$balanceSheets = BalanceSheet::find()->
 			where(['user_id'=>Yii::$app->user->id])->
 			orderBy('period_start DESC')->
@@ -108,7 +110,7 @@ class BalanceSheet extends \yii\db\ActiveRecord
 	public function initAmounts()
 	{
 		$accounts = Account::find()->joinWith('balanceItem')->where(['user_id'=>$this->user_id])->orderBy('order_code')->all();
-		$prevBalance = $this->getPreviouBalance();
+		$prevBalance = $this->getPreviousBalance();
 		for ($i = 0; $i < count($accounts); $i++) {
 			$amount = new BalanceAmount();
 			$amount->account_id = $accounts[$i]->id;
@@ -118,7 +120,7 @@ class BalanceSheet extends \yii\db\ActiveRecord
 		}
 	}
 	
-	private function getPreviouBalance()
+	public function getPreviousBalance()
 	{
 		return BalanceSheet::find()
 			->where(['<','period_start',$this->period_start])
@@ -146,7 +148,7 @@ class BalanceSheet extends \yii\db\ActiveRecord
 		if ($prev == null) return false;
 		//get joined list of balance items with their values
 		//get list of transactions between sheets dates and calculate expected results
-		$results = Yii::$app->db->createCommand("
+		$results = @Yii::$app->db->createCommand("
 		SELECT
 			item.id,
 			item.order_code,
@@ -162,12 +164,14 @@ class BalanceSheet extends \yii\db\ActiveRecord
 		FROM {{%balance_item}} AS item
 			LEFT OUTER JOIN {{%ref_balance_item}} AS ref ON item.ref_balance_item_id = ref.id
 			LEFT OUTER JOIN {{%account}} AS acc ON item.id = acc.balance_item_id
-			LEFT OUTER JOIN {{%balance_amount}} AS amntOld ON acc.id = amntOld.account_id AND amntOld.balance_sheet_id = :old_id
-			LEFT OUTER JOIN {{%balance_amount}} AS amntNew ON acc.id = amntNew.account_id AND amntNew.balance_sheet_id = :new_id
+			LEFT OUTER JOIN {{%balance_amount}} AS amntOld ON acc.id = amntOld.account_id
+			LEFT OUTER JOIN {{%balance_amount}} AS amntNew ON acc.id = amntNew.account_id
 			LEFT OUTER JOIN {{%transaction}} AS transFrom ON transFrom.account_from_id = acc.id
 			LEFT OUTER JOIN {{%transaction}} AS transTo ON transTo.account_to_id = acc.id
 		WHERE
-			ref.id IS NULL OR ref.is_calculated = false
+			(ref.id IS NULL OR ref.is_calculated = false)
+			AND amntOld.balance_sheet_id = :old_id
+			AND amntNew.balance_sheet_id = :new_id
 		GROUP BY
 			item.id,
 			item.order_code,

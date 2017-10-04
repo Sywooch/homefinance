@@ -6,22 +6,22 @@ use app\models\BalanceItem;
 use app\models\Account;
 
 class AccountValue extends Widget {
-	public $model;
-	public $attribute;
+	public $bItemModel;
+	public $bSheet_id;
 	
-	private $amount;
+	private $amountModel;
 
 	public function init() {
-        if ($this->model->accounts_number == 1) {
-			$this->amount = $this->model->accounts[0]->__get($this->attribute);
+        if ($this->bItemModel->getAccounts()->count() == 1) {
+			$this->amountModel = $this->bItemModel->accounts[0]->getAmountModel($this->bSheet_id);
 		}
 	}
 	
 	public function run() {
-        return $this->render('AccountValue', [
-			'model' => $this->model,
-			'attribute' => $this->attribute,
-			'amount' => $this->amount,
+        return $this->render('account-value', [
+			'bItemModel' => $this->bItemModel,
+			'bSheet_id' => $this->bSheet_id,
+			'amountModel' => $this->amountModel,
 		]);
 	}
 }

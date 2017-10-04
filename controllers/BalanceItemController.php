@@ -45,23 +45,18 @@ class BalanceItemController extends Controller
      */
     public function actionIndex()
     {		
-        $typesList = BalanceItemExt::find()->
-			where(['user_id' => Yii::$app->user->id])->
-			groupBy('user_id, balance_type_id')->
-			orderBy('order_code')->all();
+        $typesList = BalanceItemExt::findTypesList()->all();
+		$dataProviders = [];
 		foreach ($typesList as $type) {
 			$dataProviders[] = new ActiveDataProvider([
-				'query' => BalanceItemExt::find()->
-					where([
-						'user_id' => Yii::$app->user->id,
-						'balance_type_id' => $type->balance_type_id
-					])->orderBy('order_code')
+				'query' => BalanceItemExt::findByType($type->balance_type_id)
 			]);
 		}
 
         return $this->render('index', [
 			'typesList' => $typesList,
             'dataProviders' => $dataProviders,
+			'bSheets' => BalanceSheet::LastN(2),
         ]);
     }
 

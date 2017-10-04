@@ -47,6 +47,8 @@ class AccountController extends Controller
     {
         $dataProvider = new ActiveDataProvider([
             'query' => Account::find()->
+			joinWith('balanceItem')->
+			where(['balance_item.user_id' => Yii::$app->user->identity->id])->
 			orderBy('order_code'),
         ]);
 
@@ -76,7 +78,7 @@ class AccountController extends Controller
     {
         $model = new Account();
 
-        if ($model->load(Yii::$app->request->post()) && $model->RecalcValues() && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -95,7 +97,7 @@ class AccountController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->RecalcValues() && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [

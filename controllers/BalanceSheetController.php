@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\BalanceSheet;
+use app\models\BalanceItemExt;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
 use yii\web\Controller;
@@ -67,8 +68,20 @@ class BalanceSheetController extends Controller
      */
     public function actionView($id)
     {
+		$typesList = BalanceItemExt::findTypesList()->all();
+		foreach ($typesList as $type) {
+			$dataProviders[] = new ActiveDataProvider([
+				'query' => BalanceItemExt::findByType($type->balance_type_id)
+			]);
+		}
+		$model = $this->findModel($id);
+		$bSheets = [$model, $model->getPreviousBalance()];
+		
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+			'typesList' => $typesList,
+            'dataProviders' => $dataProviders,
+			'bSheets' => $bSheets,
         ]);
     }
 
