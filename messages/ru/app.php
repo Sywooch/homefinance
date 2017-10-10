@@ -17,11 +17,19 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Fill the Form' => 'Используй форму',
+    'CSV File' => 'CSV файл',
+    'CSV Separator' => 'CSV разделитель',
+    'Decimal Separator' => 'Разделитель разрядов',
+    'Field Amount' => 'Поле суммы',
+    'Field Date' => 'Поле даты',
+    'Field Date Format' => 'Формат поля даты',
+    'Field Description' => 'Поле описания',
+    'Inverse Signs' => 'Обратить знаки',
     'Linked {client} account.' => '',
+    'Operation Account' => 'Операционный счет',
     'Unable to save user: {errors}' => '',
+    'Upload' => 'Загрузить',
     'User with the same email as in {client} account already exists but isn\'t linked to it. Login using email first to link it.' => '',
-    'or sign with Google' => 'или Google',
     'Verify Change' => '@@Проверить транзакции@@',
     '- add -' => '- добавить -',
     '- remove -' => '- списать -',
@@ -43,6 +51,7 @@ return [
     'Description' => 'Описание',
     'Description Trigger' => 'Ключевая строка в описании',
     'Drop my data' => 'Удалить все счета',
+    'Fill the Form' => 'Используй форму',
     'Finished' => 'Завершен',
     'For Review' => 'На ревью',
     'Home' => 'Главная',
@@ -81,4 +90,5 @@ return [
     'Users' => 'Пользователи',
     'Wizards' => 'Процессы-помощники',
     'from' => 'от',
+    'or sign with Google' => 'или Google',
 ];

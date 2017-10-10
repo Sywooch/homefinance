@@ -5,8 +5,9 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model app\models\BasicProcess */
 /* @var $step app\models\BasicProcess::step */
+/* @var $article app\models\KnowledgeArticle */
 
-$this->title = $step->title;
+$this->title = $article->name;
 ?>
 <p class="lead" style="margin-bottom:5px;"><?=$model->title ?> 
 <span id="chevrons-wrapper" class="btn btn-default" title="<?= $step->stage ?>">
@@ -137,15 +138,15 @@ $this->title = $step->title;
 	</div>
 </div>
 <div class="row">
-	<h1 class="col-lg-6"><?=$step->title?></h1>
+	<h1 class="col-lg-6"><?=$article->name?></h1>
 </div>
 <div class="row">
 	<div class="col-lg-4 pull-right">
-		<img class="img-responsive" style="margin-bottom:5px;" src="images/<?= $step->code ?>.png"/>
+		<img class="img-responsive" style="margin-bottom:5px;" src="<?= $article->image_url ?>"/>
 	</div>
 	<div class="col-lg-8" style="vertical-align:center;">
 		<p>
-			<?= $step->message ?>
+			<?= $article->full_text ?>
 		</p>
 
 		<?php $form = ActiveForm::begin(); ?>
@@ -154,7 +155,7 @@ $this->title = $step->title;
 		<label>Текущая сумма на счету/задолженность: </label>
 		<input type="text" name="init_value" value="0"/>
 		<p>
-			<strong>Учитывать <?= $step->title?>?</strong>
+			<strong>Учитывать <?= $article->name?>?</strong>
 		</p>
 		<? } ?>
 

@@ -54,7 +54,15 @@ class TransactionUploadForm extends Model
     public function attributeLabels()
     {
         return [
-            
+			'field_amount' => Yii::t('app', 'Field Amount'),
+			'field_date' => Yii::t('app', 'Field Date'),
+			'field_date_format' => Yii::t('app', 'Field Date Format'),
+			'field_description' => Yii::t('app', 'Field Description'),
+			'inverse_signs' => Yii::t('app', 'Inverse Signs'),
+			'csv_separator' => Yii::t('app', 'CSV Separator'),
+			'decimal_separator' => Yii::t('app', 'Decimal Separator'),
+			'operation_account_id' => Yii::t('app', 'Operation Account'),
+			'csv_file' => Yii::t('app', 'CSV File'),
         ];
     }
     

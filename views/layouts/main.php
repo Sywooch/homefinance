@@ -57,15 +57,20 @@ AppAsset::register($this);
 				'visible' => !$user->isGuest && $user->identity->isAdmin,
 				'items' => [
 					['label' => 'Users', 'url' => ['/user/index']],
+					'<li class="divider"></li>',
 					['label' => 'Ref Balance Items', 'url' => ['/ref-balance-item/index']],
 					['label' => 'Knowledge Articles', 'url' => ['/knowledge-article/index']],
+					'<li class="divider"></li>',
 					['label' => 'Balance Types', 'url' => ['/balance-type/index']],
 					['label' => 'Balance Type Categories', 'url' => ['/balance-type-category/index']],
 					['label' => 'System Settings', 'url' => ['/system-settings/index']],
 				]
 			],
 			['label' => Yii::t('app', 'Login'), 'url' => ['/site/login'], 'visible' => $user->isGuest],
-			['label' => !$user->isGuest ? $user->identity->username : '', 
+			['encode'=>false,
+				'label' => !$user->isGuest ? 
+					Html::tag('span', '', ['class'=>'glyphicon glyphicon-user']).' '.
+					Html::encode($user->identity->username) : '', 
 				'visible' => !$user->isGuest,
 				'items' => [
 					['label'=>Yii::t('app', 'My Profile'), 'url'=>['/user/view-profile']],
@@ -75,7 +80,8 @@ AppAsset::register($this);
 						'url' => ['/site/logout'],
 						'linkOptions' => ['data-method' => 'post']
 					],
-				]
+				],
+				
 			],
         ],
     ]);

@@ -37,3 +37,18 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
 
 </div>
+<?
+if (isset($model->ref_balance_item_id) && isset($model->refBalanceItem->knowledge_article_id)) {
+	$article = $model->refBalanceItem->knowledgeArticle;
+?>
+	<div class="row">
+		<div class="col-lg-4 pull-right">
+			<img class="img-responsive" style="margin-bottom:5px;" src="<?= $article->image_url ?>"/>
+		</div>
+		<div class="col-lg-8" style="vertical-align:center;">
+			<p>
+				<?= $article->full_text ?>
+			</p>
+		</div>
+	</div>
+<? } ?>

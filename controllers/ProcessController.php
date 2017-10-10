@@ -48,6 +48,7 @@ class ProcessController extends Controller
         return $this->render($model->getView('perform'), [
 			'model'=>$model,
 			'step'=>$current_step,
+			'article' => $model->KAForStep($current_step),
 		]);
     }
 

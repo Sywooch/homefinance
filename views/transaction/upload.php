@@ -7,9 +7,9 @@ use yii\widgets\ActiveForm;
 /* @var $model app\models\TransactionUploadForm */
 /* @var $form yii\widgets\ActiveForm */
 
-$this->title = 'Upload Transactions';
-$this->params['breadcrumbs'][] = ['label' => 'Transactions', 'url' => ['index']];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = Yii::t('app', 'Upload Transactions');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Transactions'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = Yii::t('app', 'Upload');
 ?>
 <div class="transaction-upload">
 
@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = 'Update';
 		<?= $form->field($model, 'csv_file')->fileInput() ?>
 
 		<div class="form-group">
-			<?= Html::submitButton('Submit', ['class' => 'btn btn-success']) ?>
+			<?= Html::submitButton(Yii::t('app', 'Upload'), ['class' => 'btn btn-success']) ?>
 		</div>
 
 		<?php ActiveForm::end(); ?>

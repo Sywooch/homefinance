@@ -15,6 +15,7 @@ use app\components\AccountValue;
 $showHeader = 1;
 $category = 0;
 $providerIndex = 0;
+$counter = 1;
 foreach ($typesList as $type) {
 ?>
 	

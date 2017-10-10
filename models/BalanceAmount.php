@@ -47,7 +47,7 @@ class BalanceAmount extends \yii\db\ActiveRecord
 		$currentAmount = $this->balanceSheet->getBalanceAmounts()->
 			//joinWith('account')->
 			leftJoin('balance_item', 'balance_item.id = account.balance_item_id')->
-			where(['balance_item.ref_balance_item_id'=>1])->one();
+			where(['balance_item.ref_balance_item_id'=>9])->one();
 		if (!$currentAmount) {
 			Yii::warning("Current Amount not found");
 			return;

@@ -18,35 +18,37 @@ $this->params['breadcrumbs'][] = $this->title;
 		
 		<?= Html::a(Yii::t('app', 'Upload Transactions'), ['transaction/upload'], ['class' => 'btn btn-default']) ?>
     </p>
+	
+	<div class="table-responsive">
+		<?= GridView::widget([
+			'dataProvider' => $dataProvider,
+			'columns' => [
+				'id',
+				'date',
+				'amount',
+				'description',
+				'category',
+				'sub_category',
+				[
+					'attribute'=>'account_from_id',
+					'value'=>'accountFrom.name',
+				],
+				[
+					'attribute'=>'account_to_id',
+					'value'=>'accountTo.name',
+				],
+				[
+					'attribute'=>'for_review',
+					'format'=>'html',
+					'value'=>function ($item) {
+						if ($item->for_review) return Html::a(Html::tag('span', Yii::t('yii', 'Yes'), ['class'=>'glyphicon glyphicon-search']), ['review', 'id'=>$item->id]);
+						else return Yii::t('yii', 'No');
+					},
+				],
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'columns' => [
-            'id',
-            'date',
-            'amount',
-            'description',
-			'category',
-			'sub_category',
-			[
-				'attribute'=>'account_from_id',
-				'value'=>'accountFrom.name',
+				['class' => 'yii\grid\ActionColumn'],
 			],
-			[
-				'attribute'=>'account_to_id',
-				'value'=>'accountTo.name',
-			],
-			[
-				'attribute'=>'for_review',
-				'format'=>'html',
-				'value'=>function ($item) {
-					if ($item->for_review) return Html::a(Html::tag('span', Yii::t('yii', 'Yes'), ['class'=>'glyphicon glyphicon-search']), ['review', 'id'=>$item->id]);
-					else return Yii::t('yii', 'No');
-				},
-			],
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+		]); ?>
+	</div>
 
 </div>
