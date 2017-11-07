@@ -27,6 +27,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) : '' ?>
+		<?= $action == 'view-profile' ? Html::a(Yii::t('app', 'Drop my data'), 
+			['site/drop', 'process_code'=>'init'], 
+			['class'=>'btn btn-danger', 
+			'data' => ['confirm' => Yii::t('yii', 'Are you sure you want to delete this item?')],
+		]) : '' ?>
     </p>
 
     <?= DetailView::widget([
@@ -34,6 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'username',
             'email:email',
+			'create_datetime:datetime',
         ],
     ]) ?>
 

@@ -152,7 +152,7 @@ $this->title = $article->name;
 		<?php $form = ActiveForm::begin(); ?>
 
 		<? if (isset($step->buttons) && $step->buttons == 'yesno') { ?>
-		<label>Текущая сумма на счету/задолженность: </label>
+		<label><?= $model->CurrentAmountLabelForStep($step) ?>: </label>
 		<input type="text" name="init_value" value="0"/>
 		<p>
 			<strong>Учитывать <?= $article->name?>?</strong>

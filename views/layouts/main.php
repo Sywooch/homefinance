@@ -41,7 +41,15 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => Yii::t('app', 'Home'), 'url' => ['/site/index']],
+            ['label'=>'', 'visible' => !$user->isGuest,
+				'linkOptions'=>['class'=>'glyphicon glyphicon-plane'],
+				'items'=> [
+					Html::tag('li', Yii::t('app', 'Wizards'), ['class'=>'dropdown-header']),
+					['label' => Yii::t('app', 'Init wizard'),
+					'url'=>['process/start', 'process_code'=>'init']]
+				]
+			],
+			['label' => Yii::t('app', 'Home'), 'url' => ['/site/index'], 'visible' => !$user->isGuest,],
 			['label' => Yii::t('app', 'Current Balance'), 'url' => ['/balance-item/index'], 'visible' => !$user->isGuest,],
 			['label' => Yii::t('app', 'Balance History'), 'url' => ['/balance-sheet/index'], 'visible' => !$user->isGuest,],
 			['label' => Yii::t('app', 'Transactions'), 'url' => ['/transaction/index'], 'visible' => !$user->isGuest,],

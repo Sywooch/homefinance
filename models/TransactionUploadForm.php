@@ -65,6 +65,21 @@ class TransactionUploadForm extends Model
 			'csv_file' => Yii::t('app', 'CSV File'),
         ];
     }
+	
+	public function getHints()
+    {
+        return [
+			'field_amount' => Yii::t('app', 'The column header with Amounts'),
+			'field_date' => Yii::t('app', 'The column header with Dates'),
+			'field_date_format' => Yii::t('app', 'Date format, f.e. d/m/Y for 12/05/2017'),
+			'field_description' => Yii::t('app', 'The column header with Descriptions'),
+			'inverse_signs' => Yii::t('app', 'Mark this if csv presents payments with positive sign'),
+			'csv_separator' => Yii::t('app', 'CSV Separator'),
+			'decimal_separator' => Yii::t('app', 'Decimal Separator'),
+			'operation_account_id' => Yii::t('app', 'Account used for these transactions'),
+			'csv_file' => Yii::t('app', 'CSV File'),
+        ];
+    }
     
     public function upload()
     {

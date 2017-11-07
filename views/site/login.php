@@ -6,6 +6,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use yii\authclient\widgets\AuthChoice;
 
 $this->title = Yii::t('app', 'Login');
 $this->params['breadcrumbs'][] = $this->title;
@@ -13,8 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="site-login">
 	
 	<div class="row">
-		<div class="col-lg-4"></div>
-		<div class="col-lg-4 text-center panel panel-default">
+		<div class="col-lg-4 col-lg-offset-4 text-center panel panel-default">
 			<h1 class="panel-heading"><?= Html::encode($this->title) ?></h1>
 			
 			<div class="panel-body">
@@ -32,12 +32,16 @@ $this->params['breadcrumbs'][] = $this->title;
 
 			------------- <?= Yii::t('app', 'OR') ?> ------------
 			
-			<?= yii\authclient\widgets\AuthChoice::widget([
-				 'baseAuthUrl' => ['site/auth'],
-				 'popupMode' => false,
-			]) ?>
+			<?php $authAuthChoice = AuthChoice::begin([
+			    'baseAuthUrl' => ['site/auth']
+			]); ?>
+			<div class="text-center">
+			<?php foreach ($authAuthChoice->getClients() as $client): ?>
+			    <?= $authAuthChoice->clientLink($client) ?>
+			<?php endforeach; ?>
+			</div>
+			<?php AuthChoice::end(); ?>
 			</div>
 		</div>
-		<div class="col-lg-4"></div>
 	</div>
 </div>

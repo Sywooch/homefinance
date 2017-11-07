@@ -169,6 +169,19 @@ class InitWizard extends BasicProcess
 		return KnowledgeArticle::findOne($step->article);
 	}
 	
+	public function CurrentAmountLabelForStep($step) {
+		$ref = $this->RefBalanceItemForStep($step);
+		if ($ref != null) {
+			if (!$ref->balanceType->isLiabilities()) return "Текущая сумма на счету";
+			switch ($ref->balanceType->order_code) {
+				case '2.1.' : return '';
+				case '2.2.' : return 'Текущая зарезервированная сумма';
+				case '2.3.' : return 'Текущая задолженность';
+				case '2.4.' : return 'Текущие средства';
+			}
+		}
+	}
+	
 	private function createBalanceItem($step)
 	{
 		if ($step->ref_balance_item > '') {

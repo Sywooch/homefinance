@@ -89,9 +89,16 @@ class UserController extends Controller
     public function actionCreate()
     {
         $model = new User();
+		$model->scenario = 'register';
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+			if (Yii::$app->user->isGuest && $model->login()) {
+				// new user - authenticate and redirect to starting process
+				return $this->redirect(['process/perform', 'process_code'=>'init', 'step_code'=>'init1']);
+			} else {
+				// existing user - redirect to view
+				return $this->redirect(['view', 'id' => $model->id]);
+			}
         } else {
             return $this->render('create', [
                 'model' => $model,

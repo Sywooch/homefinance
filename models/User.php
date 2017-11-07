@@ -14,6 +14,7 @@ use Yii;
  * @property string $email
  * @property string $auth_key
  * @property string $auth_token
+ * @property string $create_datetime
  *
  * @property BalanceItem[] $balanceItems
  * @property BalanceSheet[] $balanceSheets
@@ -62,6 +63,32 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 		return $this->username == 'admin';
 	}
 	
+	public function beforeSave($insert) {
+		if (parent::beforeSave($insert)) {
+			// ...custom code here...
+			if($this->password > '') $this->password = crypt($this->password, "$1$".rand());
+			else unset($this->password);
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public function login() {
+		return Yii::$app->user->login($this, 0);
+	}
+	
+	public function dropData() {
+		$list = BalanceItem::find()->where(['user_id'=>$this->id])->all();
+		foreach ($list as $item) $item->delete();
+		$list = BalanceSheet::find()->where(['user_id'=>$this->id])->all();
+		foreach ($list as $item) $item->delete();
+		$list = UserSettings::find()->where(['user_id'=>$this->id])->all();
+		foreach ($list as $item) $item->delete();
+		$list = ImportSettings::find()->where(['user_id'=>$this->id])->all();
+		foreach ($list as $item) $item->delete();
+	}
+	
     /**
      * @inheritdoc
      */
@@ -76,7 +103,8 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'password', 'email'], 'required'],
+            [['password'], 'required', 'on'=>'register'],
+			[['username', 'email'], 'required'],
             [['username', 'password', 'email'], 'string', 'max' => 256],
         ];
     }
@@ -94,6 +122,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'email' => 'Email',
             'auth_key' => 'Auth Key',
             'auth_token' => 'Auth Token',
+			'create_datetime' => Yii::t('app', 'Register Datetime'),
         ];
     }
 

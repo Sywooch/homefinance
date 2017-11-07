@@ -41,6 +41,15 @@ foreach ($typesList as $type) {
 		'layout'=>'{items}',
 		'columns' => [
 			[
+				'class' => 'yii\grid\ActionColumn',
+				'contentOptions' => ['class' => 'col-lg-1'],
+				'visibleButtons' => [
+					'view'=>function ($model, $key, $index) {return true;},
+					'update'=>function ($model, $key, $index) {return !$model->immutable;},
+					'delete'=>function ($model, $key, $index) {return !$model->immutable;},
+				],
+			],
+			[
 				'contentOptions' => ['class' => 'col-lg-1'],
 				'attribute' => 'order_code',
 			],
@@ -66,15 +75,6 @@ foreach ($typesList as $type) {
 					]);
 				}
 			] : ['contentOptions' => ['class' => 'col-lg-2']],
-			[
-				'class' => 'yii\grid\ActionColumn',
-				'contentOptions' => ['class' => 'col-lg-1'],
-				'visibleButtons' => [
-					'view'=>function ($model, $key, $index) {return true;},
-					'update'=>function ($model, $key, $index) {return !$model->immutable;},
-					'delete'=>function ($model, $key, $index) {return !$model->immutable;},
-				],
-			],
 		],
 	]); ?>
 	</div>

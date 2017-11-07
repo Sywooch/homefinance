@@ -17,29 +17,42 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Upload');
 
 	<div class="transaction-upload-form">
 
-		<div class="panel">
+		<div class="">
 			<?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
-
-			<?= $form->field($model, 'field_amount')->textInput(['maxlength' => true]) ?>
 			
+			<?= $form->field($model, 'csv_file')->fileInput() ?>
+						
+			<h2><?= Yii::t('app', 'Specify CSV format') ?></h2>
+
 			<div class="row">
 				<div class="col-lg-6">
-				<?= $form->field($model, 'field_date')->textInput(['maxlength' => true]) ?>
+				<?= $form->field($model, 'field_amount')->textInput(['maxlength' => true])->
+					hint($model->getHints()['field_amount']) ?>
 				</div>
 				
 				<div class="col-lg-6">
-				<?= $form->field($model, 'field_date_format')->textInput(['maxlength' => true]) ?>
+				<?= $form->field($model, 'field_description')->textInput(['maxlength' => true])->
+					hint($model->getHints()['field_description']) ?>
 				</div>
 			</div>
 			
-			<?= $form->field($model, 'field_description')->textInput(['maxlength' => true]) ?>
+			<div class="row">
+				<div class="col-lg-6">
+				<?= $form->field($model, 'field_date')->textInput(['maxlength' => true])->
+					hint($model->getHints()['field_date']) ?>
+				</div>
+				
+				<div class="col-lg-6">
+				<?= $form->field($model, 'field_date_format')->textInput(['maxlength' => true])->
+					hint($model->getHints()['field_date_format']) ?>
+				</div>
+			</div>
 			
-			<?= $form->field($model, 'operation_account_id')->dropDownList($model->getAvailableAccounts()) ?>
-			
-			<?= $form->field($model, 'inverse_signs')->checkbox() ?>
+			<?= $form->field($model, 'inverse_signs')->checkbox()->
+				hint($model->getHints()['inverse_signs']) ?>
 		</div>
 		
-		<div class="row panel">
+		<div class="row">
 			<div class="col-lg-3">
 			<?= $form->field($model, 'csv_separator')->textInput(['maxlength' => true]) ?>
 			</div>
@@ -49,7 +62,8 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Upload');
 			</div>
 		</div>
 		
-		<?= $form->field($model, 'csv_file')->fileInput() ?>
+		<?= $form->field($model, 'operation_account_id')->dropDownList($model->getAvailableAccounts())->
+			hint($model->getHints()['operation_account_id']) ?>
 
 		<div class="form-group">
 			<?= Html::submitButton(Yii::t('app', 'Upload'), ['class' => 'btn btn-success']) ?>

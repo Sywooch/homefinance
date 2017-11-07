@@ -13,6 +13,8 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'amount')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'date')->textInput() ?>
 	
     <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
 	
@@ -25,8 +27,6 @@ use yii\widgets\ActiveForm;
 	echo $form->field($model, 'account_from_id')->dropdownList($src, ['prompt'=>Yii::t('app', '- add -')]);
 	echo $form->field($model, 'account_to_id')->dropdownList($src, ['prompt'=>Yii::t('app', '- remove -')]);
 	?>
-
-    <?= $form->field($model, 'date')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('yii', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

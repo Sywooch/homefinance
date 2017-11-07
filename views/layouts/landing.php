@@ -29,7 +29,7 @@ AppAsset::register($this);
 	$this->registerJsFile('@web/js/jquery.fullPage.js', ['depends'=>[\yii\web\JqueryAsset::className()]]);
 	$this->registerJs($this->blocks['landing-script'], $this::POS_END);
 	?>
-    <? Html::csrfMetaTags() ?>
+	<?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
@@ -41,7 +41,7 @@ NavBar::begin([
 	'brandLabel' => Yii::t('app', 'Home Finance'),
 	'brandUrl' => '#home',
 	'options' => [
-		'class' => 'navbar-inverse navbar-fixed-top',
+		'class' => 'navbar-default navbar-fixed-top',
 	],
 ]);
 echo Nav::widget([

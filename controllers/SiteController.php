@@ -154,10 +154,7 @@ class SiteController extends Controller
 	
 	public function actionDrop()
 	{
-		$list = \app\models\BalanceItem::find()->where(['user_id'=>Yii::$app->user->identity->id])->all();
-		foreach ($list as $item) $item->delete();
-		$list = \app\models\BalanceSheet::find()->where(['user_id'=>Yii::$app->user->identity->id])->all();
-		foreach ($list as $item) $item->delete();
+		Yii::$app->user->identity->dropData();
 		return $this->redirect(['index']);
 	}
 }

@@ -21,9 +21,15 @@ $this->params['nav_links'] = [
 	],
 ];
 ?>
-<div class="section">
+<style>
+.landing-1 {
+	background: url('images/landing-1.jpg') no-repeat center bottom;
+	background-size: cover;
+}
+</style>
+<div class="section landing-1">
 	<div class="row">
-	<div class="text-center col-lg-10 col-lg-offset-1">
+	<div class="text-center col-lg-10 col-lg-offset-1 well">
 		<h1 class="text-center"><?= $this->title ?></h1>
 		<p><span class="h3">Новая возможность для решения стратегических финансовых задач</span>
 		<p>	<?= Html::a(Yii::t('app', 'Init wizard'), 
