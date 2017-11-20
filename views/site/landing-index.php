@@ -27,8 +27,8 @@ $this->params['nav_links'] = [
 	background-size: cover;
 }
 .landing-1 .well .well {
-	background-color: #ABEFE3;
-	border-color: #ABEFE3;
+	background-color: #fcee81;
+	border-color: #fcee81;
 }
 .landing-2 {
 	background: url('images/landing-2.png') no-repeat center bottom;
@@ -44,7 +44,7 @@ $this->params['nav_links'] = [
 }
 </style>
 <div class="section landing-1">
-	<p class="text-center" style="position:fixed;bottom:10px;width:100%;color:#ABEFE3;font-size:large;"><span class="glyphicon glyphicon-arrow-down"></span></p>
+	<p class="text-center" style="position:fixed;bottom:10px;width:100%;color:#fcee81;font-size:large;"><span class="glyphicon glyphicon-arrow-down"></span></p>
 	<div class="text-center col-xs-10 col-xs-offset-1 well">
 		<h1 class="text-center"><?= $this->title ?></h1>
 		<p><span class="h3">Новая возможность для решения стратегических финансовых задач</span>
@@ -73,7 +73,7 @@ $this->params['nav_links'] = [
 			<div class="lead text-justify">
 				<p class="h2 text-center">... или увлекательный ребус?</p>
 				<p>Разбираться в финансовых отчетах больших корпораций - это как собирать пазлы или решать ребусы: для того, чтобы увидеть общую картину происходящего в компании, надо долго поработать над маленькими кусочками, внимательно разбирая их по отдельности.</p>
-				<p>Точно те же инструменты по сути, но слегка упрощенные по форме можно использовать для управления собственными деньгами. Конечно, это не заменит чтения хорошей книги, но может дать общее представление об увлекательном мире финансов.</p>
+				<p>Точно те же инструменты по сути, но слегка упрощенные по форме???????? можно использовать для управления собственными деньгами. Конечно, это не заменит чтения хорошей книги, но может дать общее представление об увлекательном мире финансов.</p>
 			</div>
 		</div>
 	</div>

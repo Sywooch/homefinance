@@ -23,7 +23,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'name',
             'full_text:ntext',
-            'image_url:url',
+			[
+				'attribute'=>'image_url',
+				'format'=>'html',
+				'value'=>function($model) {
+					return Html::a($model->image_url, Yii::getAlias('@web').'/'.$model->image_url);
+				}
+			],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
