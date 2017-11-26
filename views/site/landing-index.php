@@ -42,9 +42,21 @@ $this->params['nav_links'] = [
 	background: url('images/landing-3.jpg') no-repeat center bottom;
 	background-size: cover;
 }
+.arrow-down {
+	position: absolute;
+	bottom: 15px;
+	border-width: 34px 38.5px 0 38.5px;
+    border-color: #fff transparent transparent transparent;
+	cursor: pointer;
+    width: 0;
+    height: 0;
+    border-style: solid;
+	margin-left: -38px;
+	z-index:4;
+}
 </style>
 <div class="section landing-1">
-	<p class="text-center" style="position:fixed;bottom:10px;width:100%;color:#fcee81;font-size:large;"><span class="glyphicon glyphicon-arrow-down"></span></p>
+	<p class="text-center" style=""><span class=" arrow-down"></span></p>
 	<div class="text-center col-xs-10 col-xs-offset-1 well">
 		<h1 class="text-center"><?= $this->title ?></h1>
 		<p><span class="h3">Новая возможность для решения стратегических финансовых задач</span>

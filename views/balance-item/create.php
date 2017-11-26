@@ -13,6 +13,8 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="balance-item-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
+	
+	<p>Можно создать счет вручную, но удобнее воспользоваться мастером-помощником. <?= Html::a('Запустить', ['process/start', 'process_code'=>'init']) ?>?</p>
 
     <?= $this->render('_form', [
         'model' => $model,

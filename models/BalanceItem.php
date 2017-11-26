@@ -120,7 +120,7 @@ class BalanceItem extends \yii\db\ActiveRecord
             'name' => Yii::t('app', 'Name'),
             'balance_type_id' => Yii::t('app', 'Balance Type'),
             'user_id' => Yii::t('app', 'User'),
-            'ref_balance_item_id' => 'Ref Balance Item',
+            'ref_balance_item_id' => Yii::t('app', 'Reference Balance Item'),
         ];
     }
 	
@@ -159,5 +159,10 @@ class BalanceItem extends \yii\db\ActiveRecord
    public function getRefBalanceItem()
    {
        return $this->hasOne(RefBalanceItem::className(), ['id' => 'ref_balance_item_id']);
+   }
+   
+   public function getRefBalanceTypeDict()
+   {
+	   return RefBalanceItem::find()->select(['name', 'id'])->where(['balance_type_id'=>$this->balance_type_id])->indexBy('id')->column();
    }
 }

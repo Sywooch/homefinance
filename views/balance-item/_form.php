@@ -14,6 +14,8 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'balance_type_id')->dropDownList($model->getBalanceTypeDict()); ?>
+	
+	<? // $form->field($model, 'ref_balance_item_id')->dropDownList($model->getRefBalanceTypeDict(), ['prompt'=>'-']); ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('yii', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

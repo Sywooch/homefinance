@@ -41,10 +41,8 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label'=>'', 'visible' => !$user->isGuest,
-				'linkOptions'=>['class'=>'glyphicon glyphicon-plane'],
+            ['label'=>Yii::t('app', 'Wizards'), 'visible' => !$user->isGuest,
 				'items'=> [
-					Html::tag('li', Yii::t('app', 'Wizards'), ['class'=>'dropdown-header']),
 					['label' => Yii::t('app', 'Init wizard'),
 					'url'=>['process/start', 'process_code'=>'init']]
 				]

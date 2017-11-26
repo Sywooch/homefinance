@@ -112,9 +112,9 @@
 .wizard-prev .wizard-step-wrap {background: #5CB85C;} /* цвет предыдущих шагов */
 .wizard-prev .wizard-step-arrow-top {border-left-color: #5CB85C;}
 
-.wizard-current .wizard-step-wrap {background: #5BC0DE; } /* цвет текущего шага */
-.wizard-current .wizard-step-arrow-top {border-left-color: #5BC0DE; } /* должно совпадать с цветом основного блока */
-.wizard-current .wizard-step-text table td{font-weight: bold;color: white;text-shadow: 0 1px 0 #003E00;} /* стиль текста */
+.wizard-current .wizard-step-wrap {background: #fcee81; } /* цвет текущего шага */
+.wizard-current .wizard-step-arrow-top {border-left-color: #fcee81; } /* должно совпадать с цветом основного блока */
+.wizard-current .wizard-step-text table td{font-weight: bold;} /* стиль текста */
 
 .wizard-next .wizard-step-wrap {background: #eee;} /* цвет следующих шагов */
 .wizard-next .wizard-step-arrow-top {border-left-color: #eee;}
@@ -126,7 +126,7 @@
 }
 .wizard-current-icon
 {
-	color:#5BC0DE;
+	color:#fcee81;
 }
 .wizard-next-icon
 {
