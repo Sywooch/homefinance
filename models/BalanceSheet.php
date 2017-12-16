@@ -144,7 +144,7 @@ class BalanceSheet extends \yii\db\ActiveRecord
 	public function getChangeVerification()
 	{
 		//get previous sheet
-		$prev = $this->getPreviouBalance();
+		$prev = $this->getPreviousBalance();
 		if ($prev == null) return false;
 		//get joined list of balance items with their values
 		//get list of transactions between sheets dates and calculate expected results

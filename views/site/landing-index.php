@@ -61,9 +61,9 @@ $this->params['nav_links'] = [
 		<h1 class="text-center"><?= $this->title ?></h1>
 		<p><span class="h3">Новая возможность для решения стратегических финансовых задач</span>
 		<div class="row lead">
-			<div class="col-lg-4"><div class="well well-lg">Купить машину за наличные или оформить кредит в банке?</div></div>
-			<div class="col-lg-4"><div class="well well-lg">Продолжать работать на текущем месте или искать новое?</div></div>
-			<div class="col-lg-4"><div class="well well-lg">Прикоснуться к мировому опыту управления финансами.</div></div>
+			<div class="col-lg-4"><div class="well well-lg well-lg-only">Купить машину за наличные или оформить кредит в банке?</div></div>
+			<div class="col-lg-4"><div class="well well-lg well-lg-only">Продолжать работать на текущем месте или искать новое?</div></div>
+			<div class="col-lg-4"><div class="well well-lg well-lg-only">Прикоснуться к мировому опыту управления финансами.</div></div>
 		</div>
 		</p>
 		<p><?= Html::a('Зарегистрироваться', ['user/create'], ['class'=>'btn btn-success']) ?></p>
@@ -96,7 +96,7 @@ $this->params['nav_links'] = [
 			<div class="col-lg-6">
 				<p class="lead text-justify">Для быстрого старта есть несколько иллюстрированных процессов, которые в легкой форме расскажут основы финансового учета и планирования, а также помогут создать все нужные счета.</p>
 			</div>
-			<img class="col-lg-6 col-xs-12" src="images/landing-3-1.png" />
+			<img class="col-lg-6 col-xs-12 visible-lg" src="images/landing-3-1.png" />
 		</div>
 	</div><div class="slide">
 		<div class="col-xs-10 col-xs-offset-1 well">
@@ -104,15 +104,15 @@ $this->params['nav_links'] = [
 			<div class="lead text-justify col-lg-6">
 				В наше время удобная работа с приложением с экрана планшета или телефона - это не особенность, это просто необходимость. Все интерфейсы системы адаптированы для удобного доступа с платшета и приемлемого доступа с телефона. Как ни крути, но посмотреть отчет по баласу на телефоне все равно трудно.
 			</div><center>
-			<img height="200px" src="images/landing-3-2.png" /></center>
+			<img height="200px" src="images/landing-3-2.png" class=" visible-lg" /></center>
 		</div>
 	</div><div class="slide">
 		<div class="col-xs-10 col-xs-offset-1 well">
 			<p class="h2 text-center">Возможности: Баланс</p><br/>
 			<div class="col-lg-6">
-				<p class="lead text-justify">Центральное место в системе, как и в жизни, занимает баланс или обзор счетов. Он показывает текущее состояние финансов в таком же виде, как на него смотрят по утрам топ-менеджеры транс-национальных корпораций.</p>
+				<p class="lead text-justify">Центральное место в системе занимает баланс или обзор счетов. Он показывает текущее состояние финансов в таком же виде, как на него смотрят по утрам топ-менеджеры транс-национальных корпораций.</p>
 			</div>
-			<img class="col-lg-6 col-xs-12" src="images/landing-3-3.png" />
+			<img class="col-lg-6 col-xs-12 visible-lg" src="images/landing-3-3.png" />
 		</div>
 	</div><div class="slide">
 		<div class="col-xs-10 col-xs-offset-1 well">
@@ -120,17 +120,17 @@ $this->params['nav_links'] = [
 			<div class="col-lg-6">
 				<p class="lead text-justify">Когда вы оплачиваете что-то по карте, ваш банк сохраняет эту информацию и может предоставить ее в виде электронной таблицы. Такой вид можно легко прочитать и загрузить, чтобы сравнить данные по транзакциям с изменениями в балансе.</p>
 			</div>
-			<img class="col-lg-6 col-xs-12" src="images/landing-3-4.png" />
+			<img class="col-lg-6 col-xs-12 visible-lg" src="images/landing-3-4.png" />
 		</div>
 	</div><div class="slide">
 		<div class="lead text-justify col-xs-10 col-xs-offset-1 well">
 			<p class="h2 text-center">Безопасность</p><br/>
 			<div class="col-lg-8">
-				<p>Для обеспечения сохранности и приватности данных применяется ряд инструментов:</p>
+				<p>Для обеспечения сохранности и приватности данных используется:</p>
 				<ul>
-				<li>Шифрование траффика до сайта - никто не сможет перехватить ваши данные на пути к нам</li>
-				<li>Система разрешений на уровне приложения - никто, даже администратор, не может открыть чужие финансовые данные</li>
-				<li>Шифрование данных - ничто не хранится на сервере в открытом виде</li>
+				<li>Шифрование канала до сайта<span class="visible-lg"> - никто не сможет перехватить ваши данные на пути к нам<span></li>
+				<li>Система разрешений на уровне приложения<span class="visible-lg"> - никто, даже администратор, не может открыть чужие финансовые данные<span></li>
+				<li>Шифрование данных<span class="visible-lg"> - ничто не хранится на сервере в открытом виде<span></li>
 				</ul>
 				<p>Вам осталось только придумать надежный пароль или авторизоваться через Google+!</p>
 			</div>

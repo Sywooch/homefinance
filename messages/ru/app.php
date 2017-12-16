@@ -18,9 +18,9 @@
  */
 return [
     'Linked {client} account.' => '',
+    'Reference Balance Item' => '',
     'Unable to save user: {errors}' => '',
     'User with the same email as in {client} account already exists but isn\'t linked to it. Login using email first to link it.' => '',
-    'Verify Change' => '@@Проверить транзакции@@',
     '- add -' => '- добавить -',
     '- remove -' => '- списать -',
     'Account' => 'Суб-счет',
@@ -95,6 +95,7 @@ return [
     'User' => 'Пользователь',
     'Username' => 'Имя пользователя',
     'Users' => 'Пользователи',
+    'Verify Change' => 'Проверить транзакции',
     'Wizards' => 'Процессы-помощники',
     'from' => 'от',
 ];

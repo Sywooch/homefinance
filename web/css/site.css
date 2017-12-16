@@ -4,6 +4,23 @@ body {
 	font-family:Times New Roman;
 }
 
+@media (max-width: 768px) {
+	.well-lg-only {
+		padding:0px!important;
+		margin:0px!important;
+	}
+	.fp-controlArrow {
+		top:auto;
+		bottom:20px;
+		z-index:500;
+	}
+}
+
+.nav > li > a.active {
+	background-color:#fcee81!important;
+	color:#333!important;
+}
+
 .nav > li > a.btn-success {
 	color:#fff;
 }

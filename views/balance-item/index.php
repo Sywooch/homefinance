@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a(Yii::t('app', 'New Month'), ['balance-sheet/create-next'], ['class' => 'btn btn-success']) ?>
 		
-		<? /* Html::a(Yii::t('app', 'Verify Change'), ['balance-sheet/verify-change', 'id'=>$bSheets[0]->id], ['class' => 'btn btn-default']) */ ?>
+		<?= Html::a(Yii::t('app', 'Verify Change'), ['balance-sheet/verify-change', 'id'=>$bSheets[0]->id], ['class' => 'btn btn-default']) ?>
 		
 		<?= Html::a(Yii::t('app', 'Upload Transactions'), ['transaction/upload'], ['class' => 'btn btn-default']) ?>
 		

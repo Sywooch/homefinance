@@ -115,6 +115,7 @@ class UserController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+		unset($model->password);
 		$action = $this->action->id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
