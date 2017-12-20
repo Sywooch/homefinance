@@ -17,19 +17,19 @@ AppAsset::register($this);
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<script>
-	<? $this->beginBlock('landing-script'); ?>
-	$(document).ready(function() {
-		$('#fullpage').fullpage(<?= $this->params['fullpageParams'] ?>);
-	});
-	<? $this->endBlock(); ?>
-	</script>
-	<?
-	$this->registerCssFile('@web/css/jquery.fullPage.css');
-	$this->registerJsFile('@web/js/jquery.fullPage.js', ['depends'=>[\yii\web\JqueryAsset::className()]]);
-	$this->registerJs($this->blocks['landing-script'], $this::POS_END);
-	?>
-	<?= Html::csrfMetaTags() ?>
+    <script>
+    <? $this->beginBlock('landing-script'); ?>
+    $(document).ready(function() {
+            $('#fullpage').fullpage(<?= $this->params['fullpageParams'] ?>);
+    });
+    <? $this->endBlock(); ?>
+    </script>
+    <?
+    $this->registerCssFile('@web/css/jquery.fullPage.css');
+    $this->registerJsFile('@web/js/jquery.fullPage.js', ['depends'=>[\yii\web\JqueryAsset::className()]]);
+    $this->registerJs($this->blocks['landing-script'], $this::POS_END);
+    ?>
+    <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>

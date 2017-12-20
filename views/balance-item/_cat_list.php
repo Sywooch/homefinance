@@ -6,7 +6,7 @@ use app\components\AccountValue;
 
 /* @var $this yii\web\View */
 /* @var $typesList app\models\BalanceItem */
-/* @var $bSheets app\models\BalanceSheet */
+/* @var $bSheets[] app\models\BalanceSheet */
 /* @var $dataProviders[] yii\data\ActiveDataProvider */
 
 ?>

@@ -1,7 +1,5 @@
 <?
 use yii\helpers\Html;
-use yii\bootstrap\Modal;
-
 /* @var $this Widget */
 /* @var $bSheet BalanceSheet */
 /* @var $typesList[] BalanceItemExt */

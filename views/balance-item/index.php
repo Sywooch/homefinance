@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $typesList app\models\BalanceItem */
-/* @var $bSheets app\models\BalanceSheet */
+/* @var $bSheets[] app\models\BalanceSheet */
 /* @var $dataProviders[] yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'Current Balance');

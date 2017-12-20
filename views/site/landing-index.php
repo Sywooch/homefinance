@@ -1,6 +1,7 @@
 <?
 use yii\helpers\Html;
 use app\components\LandingFormCreateWidget;
+use app\components\LightroomSingle;
 
 $this->title = Yii::t('app', 'Home Finance');
 $this->params['fullpageParams'] = "{
@@ -22,38 +23,42 @@ $this->params['nav_links'] = [
 ];
 ?>
 <style>
-.landing-1 {
-	background: url('images/landing-1.jpg') no-repeat center bottom;
-	background-size: cover;
-}
-.landing-1 .well .well {
-	background-color: #fcee81;
-	border-color: #fcee81;
-}
-.landing-2 {
-	background: url('images/landing-2.png') no-repeat center bottom;
-	background-size: cover;
-}
-.landing-2-1 {
-	background: url('images/landing-2-1.jpg') no-repeat right bottom;
-	background-size: cover;
-}
-.landing-3 {
-	background: url('images/landing-3.jpg') no-repeat center bottom;
-	background-size: cover;
-}
-.arrow-down {
-	position: absolute;
-	bottom: 15px;
-	border-width: 34px 38.5px 0 38.5px;
-    border-color: #fff transparent transparent transparent;
-	cursor: pointer;
-    width: 0;
-    height: 0;
-    border-style: solid;
-	margin-left: -38px;
-	z-index:4;
-}
+    .modal-dialog {
+        margin-left:10%;
+        width:80%;
+    }
+    .landing-1 {
+            background: url('images/landing-1.jpg') no-repeat center bottom;
+            background-size: cover;
+    }
+    .landing-1 .well .well {
+            background-color: #fcee81;
+            border-color: #fcee81;
+    }
+    .landing-2 {
+            background: url('images/landing-2.png') no-repeat center bottom;
+            background-size: cover;
+    }
+    .landing-2-1 {
+            background: url('images/landing-2-1.jpg') no-repeat right bottom;
+            background-size: cover;
+    }
+    .landing-3 {
+            background: url('images/landing-3.jpg') no-repeat center bottom;
+            background-size: cover;
+    }
+    .arrow-down {
+        position: absolute;
+        bottom: 15px;
+        border-width: 34px 38.5px 0 38.5px;
+        border-color: #fff transparent transparent transparent;
+        cursor: pointer;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        margin-left: -38px;
+        z-index:4;
+    }
 </style>
 <div class="section landing-1">
 	<p class="text-center" style=""><span class=" arrow-down"></span></p>
@@ -96,7 +101,11 @@ $this->params['nav_links'] = [
 			<div class="col-lg-6">
 				<p class="lead text-justify">Для быстрого старта есть несколько иллюстрированных процессов, которые в легкой форме расскажут основы финансового учета и планирования, а также помогут создать все нужные счета.</p>
 			</div>
-			<img class="col-lg-6 col-xs-12 visible-lg" src="images/landing-3-1.png" />
+                        <?= LightroomSingle::widget([
+                            'header_title' => 'Помощники старта',
+                            'image_url'=>'images/landing-3-1.png', 
+                            'toggle_options'=>['class'=>'col-lg-6 col-xs-12 visible-lg']
+                        ]) ?>
 		</div>
 	</div><div class="slide">
 		<div class="col-xs-10 col-xs-offset-1 well">
@@ -104,7 +113,7 @@ $this->params['nav_links'] = [
 			<div class="lead text-justify col-lg-6">
 				В наше время удобная работа с приложением с экрана планшета или телефона - это не особенность, это просто необходимость. Все интерфейсы системы адаптированы для удобного доступа с платшета и приемлемого доступа с телефона. Как ни крути, но посмотреть отчет по баласу на телефоне все равно трудно.
 			</div><center>
-			<img height="200px" src="images/landing-3-2.png" class=" visible-lg" /></center>
+                        <img class="visible-lg" height="200px" src="images/landing-3-2.png" /></center>
 		</div>
 	</div><div class="slide">
 		<div class="col-xs-10 col-xs-offset-1 well">
@@ -112,7 +121,11 @@ $this->params['nav_links'] = [
 			<div class="col-lg-6">
 				<p class="lead text-justify">Центральное место в системе занимает баланс или обзор счетов. Он показывает текущее состояние финансов в таком же виде, как на него смотрят по утрам топ-менеджеры транс-национальных корпораций.</p>
 			</div>
-			<img class="col-lg-6 col-xs-12 visible-lg" src="images/landing-3-3.png" />
+                        <?= LightroomSingle::widget([
+                            'header_title' => 'Баланс - обзор счетов',
+                            'image_url'=>'images/landing-3-3.png', 
+                            'toggle_options'=>['class'=>'col-lg-6 col-xs-12 visible-lg']
+                        ]) ?>
 		</div>
 	</div><div class="slide">
 		<div class="col-xs-10 col-xs-offset-1 well">
@@ -120,7 +133,11 @@ $this->params['nav_links'] = [
 			<div class="col-lg-6">
 				<p class="lead text-justify">Когда вы оплачиваете что-то по карте, ваш банк сохраняет эту информацию и может предоставить ее в виде электронной таблицы. Такой вид можно легко прочитать и загрузить, чтобы сравнить данные по транзакциям с изменениями в балансе.</p>
 			</div>
-			<img class="col-lg-6 col-xs-12 visible-lg" src="images/landing-3-4.png" />
+                        <?= LightroomSingle::widget([
+                            'header_title' => 'Загрузка и анализ транзакций',
+                            'image_url'=>'images/landing-3-4.png', 
+                            'toggle_options'=>['class'=>'col-lg-6 col-xs-12 visible-lg']
+                        ]) ?>
 		</div>
 	</div><div class="slide">
 		<div class="lead text-justify col-xs-10 col-xs-offset-1 well">
